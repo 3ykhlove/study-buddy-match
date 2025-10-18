@@ -55,6 +55,7 @@ body {
     align-items:center;
     justify-content:space-between;
     gap: var(--sb-space);
+    padding: 0;
 }
 .navbar a {
     color:#fff;
