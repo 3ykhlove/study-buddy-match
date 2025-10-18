@@ -1,0 +1,47 @@
+@layer yeokyung {
+    /* HOME */
+    .navbar .logo {
+        font-weight:900;
+        letter-spacing: .5px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.2em;
+    }
+    .navbar .logo div {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+    .banner {
+        display:grid;
+        grid-template-columns: 1.2fr .8fr;
+        align-items:center;
+        gap: var(--sb-space-lg);
+        padding: 32px var(--sb-space-lg);
+        background: var(--sb-bg);
+    }
+    .banner h1 {
+        margin: 0 0 8px;
+        font-size: 2.5em;
+        line-height: 1.15;
+        color:#26253a;
+    }
+    .banner p {
+        font-size: 1.1em;
+    }
+
+    .banner img {
+        aspect-ratio: 1 / 1;
+        border-radius: 50%;
+        background:
+                radial-gradient(60% 60% at 60% 40%, rgba(108,99,255,.12), transparent 60%),
+                var(--sb-surface);
+        border: 1px solid var(--sb-border);
+        box-shadow: var(--sb-shadow);
+        padding: 18px;
+        object-fit: cover;
+    }
+}

@@ -5,10 +5,86 @@
     <!-- favicon -->
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     <title>Study buddy Matching</title>
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playball&display=swap" rel="stylesheet">
+    <!-- style -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- js -->
+    <script src="js/main.js"></script>
 </head>
 <body>
-    <div style="width: 300px; height: 300px; border-radius: 50%; overflow: hidden; border: 2px solid #353384;">
-        <img src="images/logo.png" alt="study buddy" width="100%" height="100%" style="object-fit: cover;"/>
-    </div>
+    <!-- header -->
+    <header class="navbar">
+        <div class="container">
+            <a href="./index.html" class="logo">
+                <div>
+                    <img src="./images/logo-character.png" alt="study buddy" width="100%" height="100%" style="object-fit: cover;"/>
+                </div>
+                STUDY BUDDY
+            </a>
+
+            <!-- Menu Icon: 900px -->
+            <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
+            <label for="nav-toggle" class="hamburger" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </label>
+
+            <nav id="site-menu">
+                <a href="./index.html" aria-current="page">Home</a>
+                <a href="./group.html">Current Group</a>
+                <a href="./message.html">Messages</a>
+                <a href="./notice.html">Notices</a>
+                <a href="./mypage.html">My Page</a>
+            </nav>
+        </div>
+    </header>
+    <!-- header -->
+
+
+    <main class="container">
+        <!-- banner -->
+        <section class="banner">
+            <div>
+                <h1>Find a Study Buddy</h1>
+                <p>Connect with classmates to study together.</p>
+                <button class="btn btn-accent lg" aria-label="Sign up">Sign Up</button>
+            </div>
+
+            <img src="./images/logo.png" width="100%"/>
+        </section>
+
+        <!-- groups -->
+        <div class="grid grid-3">
+            <section class="card bg-lavender">
+                <h2 class="text-primary">Current Group</h2>
+                <p class="text-muted">Mon/Wed 3:00 PM · Biology 101</p>
+                <button class="btn btn-primary">Open</button>
+            </section>
+
+            <section class="card bg-ivory">
+                <h2 class="text-primary">Current Group</h2>
+                <p class="text-muted">Mon/Wed 3:00 PM · Biology 101</p>
+                <button class="btn border-accent">Open</button>
+            </section>
+
+            <section class="card">
+                <h2 class="text-primary">Create Group</h2>
+                <button class="btn border-mint">Make a Group</button>
+            </section>
+        </div>
+    </main>
+
+
+    <!-- footer -->
+    <footer class="footer container">
+        © 2025 Study Buddy
+    </footer>
+    <!-- footer -->
+
+
+
 </body>
 </html>
