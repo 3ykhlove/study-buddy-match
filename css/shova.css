@@ -1,5 +1,248 @@
-@layer shova {
-    .s-test {
-        color: blue;
-    }
+/* =========================
+   Base Reset & Typography
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f5f5f5;
+  color: #333;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+h1, h2, h3 {
+  color: #4b0082;
+  margin-bottom: 1rem;
+}
+p {
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+/* =========================
+   Container & Sections
+========================= */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem 1rem;
+}
+section {
+  padding: 3rem 0;
+}
+
+/* =========================
+   Navbar
+========================= */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border-radius: 0 0 1rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.navbar .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+.navbar .logo img {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+.navbar .logo img:hover {
+  transform: scale(1.1) rotate(-5deg);
+  filter: drop-shadow(0 0 5px #7f5af0);
+  cursor: pointer;
+}
+.navbar nav a {
+  margin-left: 1.5rem;
+  font-weight: 500;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  transition: background 0.3s, color 0.3s;
+}
+.navbar nav a:hover {
+  background: #7f5af0;
+  color: #fff;
+}
+
+/* =========================
+   Banner
+========================= */
+.banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #f0ebff, #d9e6ff);
+  border-radius: 1rem;
+  gap: 2rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+.banner h1 {
+  font-size: 3rem;
+}
+.banner p {
+  font-size: 1.2rem;
+}
+.banner img {
+  max-width: 400px;
+  width: 100%;
+  border-radius: 1rem;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  cursor: pointer;
+}
+.banner img:hover {
+  transform: scale(1.05) rotate(-2deg);
+  box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+}
+
+/* =========================
+   Buttons
+========================= */
+.btn {
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 0.7rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.btn-accent {
+  background: linear-gradient(45deg, #7f5af0, #6930c3);
+  color: #fff;
+}
+.btn-accent:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(127,90,240,0.4);
+}
+.btn-primary {
+  background: #4b0082;
+  color: #fff;
+}
+.btn-primary:hover {
+  background: #3a0066;
+}
+.border-accent {
+  border: 2px solid #7f5af0;
+  color: #7f5af0;
+  background: none;
+}
+.border-accent:hover {
+  background: #7f5af0;
+  color: #fff;
+}
+.border-mint {
+  border: 2px solid #2dd4bf;
+  color: #2dd4bf;
+  background: none;
+}
+.border-mint:hover {
+  background: #2dd4bf;
+  color: #fff;
+}
+
+/* =========================
+   Cards & Grid
+========================= */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+.card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+.card h2, .card h3 {
+  margin-bottom: 1rem;
+}
+.card p {
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+/* =========================
+   Footer
+========================= */
+.footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: #fff;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+  margin-top: 3rem;
+}
+
+/* =========================
+   Forms & Inputs
+========================= */
+input, select, textarea {
+  width: 100%;
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+  border-radius: 0.6rem;
+  border: 1px solid #ccc;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: #7f5af0;
+  box-shadow: 0 0 5px rgba(127,90,240,0.3);
+  outline: none;
+}
+
+/* =========================
+   Modal
+========================= */
+.modal {
+  display: none;
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  animation: slideIn 0.5s ease forwards;
+}
+@keyframes slideIn {
+  0% { transform: translateY(-50px); opacity:0; }
+  100% { transform: translateY(0); opacity:1; }
+}
+
+/* =========================
+   Responsive
+========================= */
+@media (max-width: 900px){
+  .banner { flex-direction: column; }
+  .navbar nav a { margin:0.5rem 0; display:block; text-align:center; }
+  .grid { grid-template-columns: 1fr; }
 }
