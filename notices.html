@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Study Buddy - Notices</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <header class="navbar container">
+      <a href="index.html" class="logo">
+        <img src="images/logo-character.png" width="40" alt="Study Buddy" />
+        STUDY BUDDY
+      </a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="groups.html">Groups</a>
+        <a href="chat.html">Chat</a>
+        <a href="notices.html">Notices</a>
+        <a href="mypage.html">My Page</a>
+        <a href="signup.html">Sign-Up</a>
+        <a href="admin.html">Admin</a>
+      </nav>
+    </header>
+
+    <section class="container">
+      <h1>Notices & Announcements</h1>
+      <button class="btn btn-accent" onclick="addNotice()">
+        Add New Notice
+      </button>
+      <div class="grid" id="noticesList"></div>
+    </section>
+
+    <footer class="footer container">© 2025 Study Buddy</footer>
+    <script src="js/app.js"></script>
+  </body>
+</html>
