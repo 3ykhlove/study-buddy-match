@@ -1,62 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- favicon -->
-    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-    <title>Study buddy Matching</title>
-    <!-- font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playball&display=swap" rel="stylesheet">
-    <!-- style -->
-    <link rel="stylesheet" href="css/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Study Buddy - My Page</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <header class="navbar container">
+      <a href="index.html" class="logo">
+        <img src="images/logo-character.png" width="40" alt="Study Buddy" />
+        STUDY BUDDY
+      </a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="groups.html">Groups</a>
+        <a href="chat.html">Chat</a>
+        <a href="notices.html">Notices</a>
+        <a href="mypage.html">My Page</a>
+        <a href="signup.html">Sign-Up</a>
+        <a href="admin.html">Admin</a>
+      </nav>
+    </header>
 
-    <!-- js -->
-    <script src="js/main.js"></script>
-</head>
-<body>
+    <section class="container">
+      <h1>My Dashboard</h1>
+      <div id="myInfo" class="card">
+        <h3>Your Info</h3>
+        <p id="myName"></p>
+        <p id="myEmail"></p>
+        <p id="mySchedule"></p>
+      </div>
 
-<!-- header -->
-<header class="navbar">
-    <div class="container">
-        <a href="./index.html" class="logo">
-            <div>
-                <img src="./images/logo-character.png" alt="study buddy" width="100%" height="100%" style="object-fit: cover;"/>
-            </div>
-            STUDY BUDDY
-        </a>
+      <h2>My Groups</h2>
+      <div id="myGroups" class="grid"></div>
+    </section>
 
-        <!-- Menu Icon: 900px -->
-        <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
-        <label for="nav-toggle" class="hamburger" aria-label="Toggle navigation">
-            <span></span><span></span><span></span>
-        </label>
-
-        <nav id="site-menu">
-            <a href="./index.html">Home</a>
-            <a href="./group.html">Current Group</a>
-            <a href="./message.html">Messages</a>
-            <a href="./notice.html">Notices</a>
-            <a href="./mypage.html" aria-current="page">My Page</a>
-        </nav>
-    </div>
-</header>
-<!-- header -->
-
-<div class="container">
-    My page
-</div>
-
-
-<!-- footer -->
-<footer class="footer container">
-    © 2025 Study Buddy
-</footer>
-<!-- footer -->
-
-
-
-</body>
+    <footer class="footer container">© 2025 Study Buddy</footer>
+    <script src="js/app.js"></script>
+  </body>
 </html>
