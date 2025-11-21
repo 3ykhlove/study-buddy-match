@@ -44,6 +44,168 @@
         object-fit: cover;
     }
 
+
+    /* --- Auth Page Layout START --- */
+    .auth-page {
+        padding: clamp(24px, 5vw, 48px) 16px;
+        display: grid;
+        justify-items: center;
+        gap: 24px;
+    }
+    .auth-logo img {
+        width: min(220px, 40vw);
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        background:
+                radial-gradient(60% 60% at 60% 40%, rgba(108,99,255,.12), transparent 60%),
+                var(--sb-surface);
+        border: 1px solid var(--sb-border);
+        box-shadow: var(--sb-shadow);
+        padding: 14px;
+        object-fit: cover;
+        margin-top: 50px;
+    }
+
+    .auth-card {
+        width: min(760px, 100%);
+    }
+    .auth-card h2 { margin: 0 0 6px; }
+    .auth-card p { margin: 0 0 18px; }
+
+    /* Tabs (segmented control) */
+    .auth-tabs {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        background: color-mix(in oklab, var(--sb-primary) 10%, #fff);
+        border: 1px solid var(--sb-border);
+        border-radius: 999px;
+        padding: 4px;
+        margin: 8px 0 20px;
+        overflow: hidden;
+    }
+    .auth-tabs .tab {
+        text-align: center;
+        padding: 10px 6px;
+        font-weight: 700;
+        cursor: pointer;
+        z-index: 1;
+        color: #333;
+        user-select: none;
+    }
+    .auth-tabs .tab-pill {
+        position: absolute;
+        top: 4px; left: 4px;
+        width: calc(50% - 4px);
+        height: calc(100% - 8px);
+        background: var(--sb-surface);
+        border: 1px solid var(--sb-border);
+        border-radius: 999px;
+        box-shadow: var(--sb-shadow);
+        transition: transform .25s ease;
+    }
+
+    /* Tab checked */
+    #tab-in:checked ~ .auth-tabs .tab-pill { transform: translateX(0%); }
+    #tab-up:checked ~ .auth-tabs .tab-pill { transform: translateX(100%); }
+
+    #tab-in:checked ~ .auth-tabs label[for="tab-in"],
+    #tab-up:checked ~ .auth-tabs label[for="tab-up"] {
+        color: var(--sb-primary-700);
+    }
+
+    /* --- Forms --- */
+    .auth-form { display: grid; gap: 12px; }
+    .auth-form .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+    .auth-form .btn { margin-top: 8px; }
+
+    /* showing if Tab changed */
+    .auth-form.signin { display: none; }
+    .auth-form.signup { display: none; }
+    #tab-in:checked ~ .auth-form.signin { display: grid; }
+    #tab-up:checked ~ .auth-form.signup { display: grid; }
+
+    .input-icon {
+        position: relative;
+    }
+    .input-icon img {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        width: 18px;
+        height: 18px;
+        transform: translateY(-50%);
+    }
+    .input-icon > .input {
+        padding-left: 40px;
+    }
+
+    /* class check list (scroll) */
+    .class-list {
+        max-height: 220px;
+        overflow: auto;
+        border: 1px solid var(--sb-border, #e5e7eb);
+        border-radius: 10px;
+        padding: 8px;
+        background: #fff;
+    }
+    .class-item {
+        display: grid;
+        grid-template-columns: 20px 1fr;
+        align-items: center;
+        gap: 10px;
+        padding: 8px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+    .class-item:hover { background: rgba(0,0,0,.03); }
+    .class-item + .class-item { margin-top: 4px; }
+    .class-item input { width: 16px; height: 16px; }
+
+    /* Day/Time + Add buttons */
+    .time-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        gap: 12px;
+        align-items: center;
+    }
+
+    /* select dropdown */
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+        content: "▾";
+        position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+        pointer-events: none; opacity: .6;
+    }
+    .select-wrap > .select { width: 100%; appearance: none; }
+
+    /* Add button small-size */
+    .add-btn { padding-inline: 14px; height: 40px; border: 1px solid var(--sb-border, #e5e7eb); }
+
+    /* selected time chips */
+    .chips {
+        display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;
+    }
+    .chip {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 6px 10px; border-radius: 999px;
+        background: rgba(99,102,241,.12);
+        border: 1px solid rgba(99,102,241,.25);
+        font-weight: 600; font-size: 0.9rem;
+    }
+    .chip button {
+        border: 0; background: transparent; cursor: pointer;
+        line-height: 1; font-size: 16px; opacity: .7;
+    }
+
+    /* --- Auth Page Layout END --- */
+
+    /* Responsive */
+
     @media (max-width: 900px) {
         .banner {
             grid-template-columns: 1fr;
@@ -67,5 +229,10 @@
             font-size: 1.1em;
             padding: 10px 22px;
         }
+
+        /* --- Auth Page Layout START --- */
+        .auth-form .form-row { grid-template-columns: 1fr; }
+        .time-row { grid-template-columns: 1fr; }
+        /* --- Auth Page Layout END --- */
     }
 }
