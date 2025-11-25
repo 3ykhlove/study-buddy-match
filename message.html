@@ -68,10 +68,104 @@
 </header>
 <!-- header -->
 
-<div class="container">
-    Message
-</div>
+<main class="container messages-page">
+    <!-- page title -->
+    <header class="messages-header">
+        <h1>Messages</h1>
+        <p>Chat with your study groups</p>
+    </header>
 
+    <!-- backdrop overlay for mobile side panels -->
+    <div class="msg-overlay" id="msgOverlay"></div>
+
+    <!-- 3-column grid (desktop) / 1 column + sliding panels (mobile) -->
+    <section class="messages-grid">
+        <!-- LEFT: Conversations -->
+        <aside class="msg-panel msg-sidebar" id="msgSidebar">
+            <div class="msg-panel-header">
+                <h2>Conversations</h2>
+            </div>
+
+            <div class="msg-sidebar-body">
+                <div class="msg-search">
+                    <input
+                            class="input"
+                            type="text"
+                            placeholder="Search groups..."
+                            id="searchGroups"
+                    />
+                </div>
+
+                <ul class="msg-conversation-list" id="conversationList">
+                    <!-- filled via JS based on user.groups -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- CENTER: Chat thread -->
+        <section class="msg-panel msg-thread-panel">
+            <div class="msg-thread-header">
+                <div class="msg-thread-title">
+                    <h2 id="threadTitle"></h2>
+                    <span id="threadSubtitle"></span>
+                </div>
+
+                <!-- mobile controls: open conversations & members -->
+                <div class="msg-thread-actions">
+                    <button
+                            class="icon-btn"
+                            id="openConversations"
+                            type="button"
+                            aria-label="Show conversations"
+                            style="display: none;"
+                    >
+                        <img src="./images/chat.png" alt="conversations" />
+                    </button>
+                    <button
+                            class="icon-btn"
+                            id="openMembers"
+                            type="button"
+                            aria-label="Show members"
+                    >
+                        <span class="icon-hamburger-lines">
+                          <span></span><span></span><span></span>
+                        </span>
+                    </button>
+
+
+                </div>
+            </div>
+
+            <div class="msg-thread-body" id="threadBody">
+                <!-- messages rendered here via JS -->
+            </div>
+
+            <div class="msg-input-bar">
+                <input
+                        id="messageInput"
+                        class="input"
+                        type="text"
+                        placeholder="Type a message..."
+                />
+                <button class="send-btn" id="sendBtn" aria-label="Send message">
+                    <img src="./images/send.png" alt="send" />
+                </button>
+            </div>
+        </section>
+
+        <!-- RIGHT: Members -->
+        <aside class="msg-panel msg-members-panel" id="msgMembers">
+            <div class="msg-members-header">
+                <h2>Members</h2>
+                <span id="memberCount">0 members</span>
+            </div>
+
+            <div class="msg-members-body" id="membersBody">
+                <!-- member rows rendered via JS -->
+            </div>
+        </aside>
+    </section>
+</main>
 
 <!-- footer -->
 <footer class="footer container">
@@ -79,9 +173,8 @@
 </footer>
 <!-- footer -->
 
-
-
 <!-- js -->
 <script src="js/main.js"></script>
+<script src="js/messages.js"></script>
 </body>
 </html>
