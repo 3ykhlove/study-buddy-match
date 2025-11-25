@@ -56,12 +56,24 @@ document.addEventListener("DOMContentLoaded", function () {
             chip.textContent.trim()
         );
 
+        const classListContainer = document.getElementById("classList");
+        let selectedClassEls = classListContainer.querySelectorAll(
+            '[data-selected="true"], [aria-selected="true"], .selected'
+        );
+        if (selectedClassEls.length === 0) {
+            selectedClassEls = classListContainer.children;
+        }
+        const classes = Array.from(selectedClassEls).map(item =>
+            item.textContent.trim()
+        );
+
         const newUser = {
             fullName,
             email,
             password,
             timeSlots,
             studyPurpose,
+            classes,
             role: "user",
         };
 
