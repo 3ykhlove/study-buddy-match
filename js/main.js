@@ -66,3 +66,27 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+
+
+/* ------------------------------------------------------
+   FLOATING CURSOR BUBBLES (Added — original code unchanged)
+------------------------------------------------------- */
+document.addEventListener("mousemove", (e) => {
+    const bubble = document.createElement("div");
+    bubble.className = "cursor-bubble";
+
+    bubble.style.left = e.clientX + "px";
+    bubble.style.top = e.clientY + "px";
+
+    document.body.appendChild(bubble);
+
+    // small delay so transitions activate
+    requestAnimationFrame(() => {
+        bubble.style.transform = "translate(-50%, -50%) scale(1.6)";
+        bubble.style.opacity = "0";
+    });
+
+    // remove after animation completes
+    setTimeout(() => bubble.remove(), 1200);
+});
