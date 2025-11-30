@@ -56,10 +56,19 @@ document.addEventListener("DOMContentLoaded", function () {
             chip.textContent.trim()
         );
 
+        const classListContainer = document.getElementById("classList");
+
+        // get every checked <input type="checkbox">
+        const checkedBoxes = classListContainer.querySelectorAll("input[type='checkbox']:checked");
+
+        const classes = Array.from(checkedBoxes).map(box => box.value);
+
+        
         const newUser = {
             fullName,
             email,
             password,
+            classes,
             timeSlots,
             studyPurpose,
             role: "user",
