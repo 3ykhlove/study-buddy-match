@@ -1,43 +1,193 @@
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Study Buddy - My Page</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  </head>
-  <body>
-    <header class="navbar container">
-      <a href="index.html" class="logo">
-        <img src="images/logo-character.png" width="40" alt="Study Buddy" />
-        STUDY BUDDY
-      </a>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="groups.html">Groups</a>
-        <a href="chat.html">Chat</a>
-        <a href="notices.html">Notices</a>
-        <a href="mypage.html">My Page</a>
-        <a href="signup.html">Sign-Up</a>
-        <a href="admin.html">Admin</a>
-      </nav>
-    </header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- favicon -->
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <title>Study buddy Matching</title>
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playball&display=swap" rel="stylesheet">
+    <!-- style -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
 
-    <section class="container">
-      <h1>My Dashboard</h1>
-      <div id="myInfo" class="card">
-        <h3>Your Info</h3>
-        <p id="myName"></p>
-        <p id="myEmail"></p>
-        <p id="mySchedule"></p>
-      </div>
+<!-- header -->
+<header class="navbar">
+    <div class="container">
+        <a href="./index.html" class="logo">
+            <div>
+                <img src="./images/logo-character.png" alt="study buddy"
+                     width="100%" height="100%" style="object-fit: cover;"/>
+            </div>
+            STUDY BUDDY
+        </a>
 
-      <h2>My Groups</h2>
-      <div id="myGroups" class="grid"></div>
-    </section>
+        <div class="nav-right">
+            <div class="profile-menu" id="profileMenu" style="display:none;">
+                <div class="profile-btn" id="profileBtn">
+                    <div class="profile-circle" id="profileCircle"></div>
+                    <span id="profileName"></span>
+                </div>
 
-    <footer class="footer container">© 2025 Study Buddy</footer>
-    <script src="js/app.js"></script>
-  </body>
+                <div class="dropdown" id="dropdownMenu">
+                    <p class="dropdown-title">My Account</p>
+
+                    <a href="./mypage.html" class="dropdown-item" style="display: flex;">
+                        <img src="./images/user.gif" alt="user icon" class="icon-user">
+                        <span>My Page</span>
+                    </a>
+
+                    <hr />
+
+                    <button class="dropdown-item logout-btn" id="logoutBtn">
+                        <img src="./images/logout.png" alt="logout" class="icon-logout">
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+            <label for="nav-toggle" class="hamburger">
+                <span></span><span></span><span></span>
+            </label>
+
+            <nav id="site-menu">
+                <a href="./index.html">Home</a>
+                <a href="./group.html">Current Group</a>
+                <a href="./message.html">Messages</a>
+                <a href="./notice.html">Notices</a>
+            </nav>
+        </div>
+    </div>
+</header>
+<!-- header -->
+
+<div class="container">
+    My page
+</div>
+
+<!-- footer -->
+<footer class="footer container">
+    © 2025 Study Buddy
+</footer>
+<!-- footer -->
+
+<!-- js -->
+<script src="js/main.js"></script>
+
+
+
+
+<!-- NOTIFICATION BANNER -->
+<div class="noti" id="noti">Welcome back! 🎉</div>
+
+<!-- DARK MODE BUTTON -->
+<button id="darkModeToggle" class="dark-toggle">🌙</button>
+
+<!-- BACK TO TOP BUTTON -->
+<button id="topBtn" class="top-button">↑</button>
+
+
+<!-- EXTRA CSS -->
+<style>
+/* Fade In */
+body {
+    opacity: 0;
+    animation: fadeIn 0.6s ease forwards;
+}
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* Notification */
+.noti {
+    position: fixed;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #4CAF50;
+    color: #fff;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-size: 18px;
+    transition: 0.6s;
+    z-index: 9999;
+}
+.noti.show { top: 20px; }
+
+/* Dark Mode */
+.dark-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #222;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    cursor: pointer;
+    font-size: 22px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: 0.3s;
+    z-index: 9999;
+}
+.dark-toggle:hover { transform: scale(1.1); }
+
+body.dark-mode { background: #1e1e1e; color: #fff; }
+body.dark-mode .navbar,
+body.dark-mode .footer { background: #111; }
+
+/* Back To Top */
+.top-button {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    background: #FFA500;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    display: none;
+    cursor: pointer;
+    font-size: 24px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: 0.3s;
+    z-index: 9999;
+}
+.top-button:hover { transform: scale(1.1); }
+</style>
+
+
+<!-- EXTRA JS -->
+<script>
+// Notification
+const noti = document.getElementById("noti");
+setTimeout(() => {
+    noti.classList.add("show");
+    setTimeout(() => noti.classList.remove("show"), 2500);
+}, 700);
+
+// Dark Mode
+const toggle = document.getElementById("darkModeToggle");
+toggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    toggle.textContent = document.body.classList.contains("dark-mode") ? "☀️" : "🌙";
+});
+
+// Back To Top
+const topBtn = document.getElementById("topBtn");
+window.addEventListener("scroll", () => {
+    topBtn.style.display = window.scrollY > 300 ? "block" : "none";
+});
+topBtn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
+</script>
+
+</body>
 </html>
