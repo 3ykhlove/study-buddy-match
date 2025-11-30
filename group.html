@@ -1,87 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- favicon -->
-    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-    <title>Study buddy Matching</title>
-    <!-- font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playball&display=swap" rel="stylesheet">
-    <!-- style -->
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-<!-- header -->
-<header class="navbar">
-    <div class="container">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+    <title>Study Buddy Matching</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playball&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      /* Simple buddy card styling */
+      .buddy {
+        padding: 10px;
+        margin: 5px 0;
+        background: #f0f0f0;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- header -->
+    <header class="navbar">
+      <div class="container">
         <a href="./index.html" class="logo">
-            <div>
-                <img src="./images/logo-character.png" alt="study buddy"
-                     width="100%" height="100%" style="object-fit: cover;"/>
-            </div>
-            STUDY BUDDY
+          <div>
+            <img
+              src="./images/logo-character.png"
+              alt="study buddy"
+              width="100%"
+              height="100%"
+              style="object-fit: cover"
+            />
+          </div>
+          STUDY BUDDY
         </a>
 
         <!-- menu -->
         <div class="nav-right">
-            <!--  profile menu : if sign in, change display:flex -->
-            <div class="profile-menu" id="profileMenu" style="display:none;">
-                <div class="profile-btn" id="profileBtn">
-                    <div class="profile-circle" id="profileCircle"></div>
-                    <span id="profileName"></span>
-                </div>
-
-                <div class="dropdown" id="dropdownMenu">
-                    <p class="dropdown-title">My Account</p>
-
-                    <a href="./mypage.html" class="dropdown-item" style="display: flex;">
-                        <img src="./images/user.gif" alt="user icon" class="icon-user">
-                        <span>My Page</span>
-                    </a>
-
-                    <hr />
-
-                    <button class="dropdown-item logout-btn" id="logoutBtn">
-                        <img src="./images/logout.png" alt="logout" class="icon-logout">
-                        <span>Logout</span>
-                    </button>
-                </div>
+          <div class="profile-menu" id="profileMenu" style="display: none">
+            <div class="profile-btn" id="profileBtn">
+              <div class="profile-circle" id="profileCircle"></div>
+              <span id="profileName"></span>
             </div>
 
-            <!-- Menu Icon: 900px -->
-            <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
-            <label for="nav-toggle" class="hamburger" aria-label="Toggle navigation">
-                <span></span><span></span><span></span>
-            </label>
+            <div class="dropdown" id="dropdownMenu">
+              <p class="dropdown-title">My Account</p>
+              <a
+                href="./mypage.html"
+                class="dropdown-item"
+                style="display: flex"
+              >
+                <img
+                  src="./images/user.gif"
+                  alt="user icon"
+                  class="icon-user"
+                />
+                <span>My Page</span>
+              </a>
+              <hr />
+              <button class="dropdown-item logout-btn" id="logoutBtn">
+                <img
+                  src="./images/logout.png"
+                  alt="logout"
+                  class="icon-logout"
+                />
+                <span>Logout</span>
+              </button>
+            </div>
+          </div>
 
-            <nav id="site-menu">
-                <a href="./index.html">Home</a>
-                <a href="./group.html" aria-current="page">Current Group</a>
-                <a href="./message.html">Messages</a>
-                <a href="./notice.html">Notices</a>
-            </nav>
+          <input
+            type="checkbox"
+            id="nav-toggle"
+            class="nav-toggle"
+            aria-hidden="true"
+          />
+          <label
+            for="nav-toggle"
+            class="hamburger"
+            aria-label="Toggle navigation"
+          >
+            <span></span><span></span><span></span>
+          </label>
+
+          <nav id="site-menu">
+            <a href="./index.html">Home</a>
+            <a href="./group.html" aria-current="page">Current Group</a>
+            <a href="./message.html">Messages</a>
+            <a href="./notice.html">Notices</a>
+          </nav>
         </div>
+      </div>
+    </header>
+    <!-- header -->
+
+    <div class="container">
+      <h2>Current Group</h2>
+
+      <!-- Buddy list -->
+      <div id="buddyList">
+        <div class="buddy">Alice</div>
+        <div class="buddy">Bob</div>
+        <div class="buddy">Charlie</div>
+        <div class="buddy">Diana</div>
+      </div>
     </div>
-</header>
-<!-- header -->
 
-<div class="container">
-    Current Group
-</div>
+    <!-- footer -->
+    <footer class="footer container">© 2025 Study Buddy</footer>
 
+    <!-- JS -->
+    <script src="js/main.js"></script>
+    <script>
+      // ========== 1. Create New Group Modal ==========
+      const newGroupBtn = document.createElement("button");
+      newGroupBtn.textContent = "+ New Group";
+      newGroupBtn.style =
+        "position:fixed; bottom:20px; right:20px; padding:10px 20px; font-size:16px; border:none; border-radius:8px; background:#4CAF50; color:white; cursor:pointer; z-index:1000;";
+      document.body.appendChild(newGroupBtn);
 
-<!-- footer -->
-<footer class="footer container">
-    © 2025 Study Buddy
-</footer>
-<!-- footer -->
+      const newGroupModal = document.createElement("div");
+      newGroupModal.style =
+        "display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1001; text-align:center;";
+      newGroupModal.innerHTML = `
+  <div style="background:#fff; margin:100px auto; padding:20px; width:300px; border-radius:10px; display:inline-block;">
+    <h3>Create New Group</h3>
+    <input id="groupNameInput" placeholder="Group Name" style="width:90%; padding:5px; margin-bottom:10px;">
+    <br/>
+    <button id="createGroupBtn" style="padding:5px 10px; margin-right:5px;">Create</button>
+    <button id="closeGroupModalBtn" style="padding:5px 10px;">Cancel</button>
+  </div>
+`;
+      document.body.appendChild(newGroupModal);
 
+      newGroupBtn.onclick = () => (newGroupModal.style.display = "block");
+      document.getElementById("closeGroupModalBtn").onclick = () =>
+        (newGroupModal.style.display = "none");
+      document.getElementById("createGroupBtn").onclick = () => {
+        const groupName = document.getElementById("groupNameInput").value;
+        if (groupName.trim() !== "") {
+          addGroupToList(groupName);
+          showNotification(`New group created: ${groupName}`);
+          document.getElementById("groupNameInput").value = "";
+          newGroupModal.style.display = "none";
+        } else {
+          alert("Please enter a group name!");
+        }
+      };
 
+      // ========== 2. Search Study Buddies ==========
+      const searchDiv = document.createElement("div");
+      searchDiv.style = "margin:20px 0;";
+      searchDiv.innerHTML = `<input id="buddySearch" placeholder="Search study buddies..." style="padding:5px; width:200px;">`;
+      document.querySelector(".container").prepend(searchDiv);
 
-<!-- js -->
-<script src="js/main.js"></script>
-</body>
+      document.getElementById("buddySearch").addEventListener("input", (e) => {
+        const query = e.target.value.toLowerCase();
+        const buddies = document.querySelectorAll(".buddy");
+        buddies.forEach((b) => {
+          b.style.display = b.textContent.toLowerCase().includes(query)
+            ? "block"
+            : "none";
+        });
+      });
+
+      // ========== 3. Notifications ==========
+      function showNotification(msg) {
+        const notif = document.createElement("div");
+        notif.textContent = msg;
+        notif.style =
+          "position:fixed; top:10px; right:10px; background:#4CAF50; color:white; padding:10px 15px; border-radius:5px; box-shadow:0 2px 5px rgba(0,0,0,0.3); z-index:1002;";
+        document.body.appendChild(notif);
+        setTimeout(() => notif.remove(), 3000);
+      }
+
+      // ========== 4. Add new group to the buddy list ==========
+      function addGroupToList(groupName) {
+        const buddyList = document.getElementById("buddyList");
+        const newBuddy = document.createElement("div");
+        newBuddy.className = "buddy";
+        newBuddy.textContent = groupName;
+        buddyList.appendChild(newBuddy);
+      }
+    </script>
+  </body>
 </html>
