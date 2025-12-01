@@ -5,6 +5,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     const searchBox   = document.getElementById("classSearch");
     const hiddenClasses = document.getElementById("selectedClasses");
 
+    /* only group page */
+    const groupClassInput = document.getElementById("groupClassName");
+    const isGroupPage = !!groupClassInput;
+    /* only group page */
+
+
     const PAGE_SIZE = 10;
     let allSubjects = [];
     let filtered = [];
@@ -18,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         applyFilter("");
     }
 
-    // Render one checkbox row
+    // Render one row (checkbox + text)
     function renderItem(subj) {
         const label = document.createElement("label");
         label.className = "class-item";
@@ -29,10 +35,50 @@ document.addEventListener("DOMContentLoaded", async function () {
         checkbox.checked = selected.has(subj.code);
 
         checkbox.addEventListener("change", function () {
-            if (checkbox.checked) selected.add(subj.code);
-            else selected.delete(subj.code);
-            if (hiddenClasses) hiddenClasses.value = Array.from(selected).join(",");
+            if (isGroupPage) {
+                if (checkbox.checked) {
+                    selected.clear();
+                    selected.add(subj.code);
+
+                    if (classListEl) {
+                        const allCheckboxes =
+                            classListEl.querySelectorAll('input[type="checkbox"]');
+                        allCheckboxes.forEach(cb => {
+                            if (cb !== checkbox) cb.checked = false;
+                        });
+
+                        const allLabels = classListEl.querySelectorAll(".class-item");
+                        allLabels.forEach(l => l.classList.remove("group_subject-selected"));
+                    }
+
+                    label.classList.add("group_subject-selected");
+
+                    if (hiddenClasses) hiddenClasses.value = subj.code;
+                    if (groupClassInput) groupClassInput.value = subj.code;
+                } else {
+                    selected.delete(subj.code);
+                    if (hiddenClasses) hiddenClasses.value = "";
+                    if (groupClassInput) groupClassInput.value = "";
+                    label.classList.remove("group_subject-selected");
+                }
+            } else {
+                // sign up
+                if (checkbox.checked) selected.add(subj.code);
+                else selected.delete(subj.code);
+                if (hiddenClasses) hiddenClasses.value = Array.from(selected).join(",");
+            }
         });
+
+        // group
+        if (isGroupPage) {
+            label.addEventListener("click", function (e) {
+                if (e.target === checkbox) return;
+
+                e.preventDefault();
+                checkbox.checked = !checkbox.checked;
+                checkbox.dispatchEvent(new Event("change", { bubbles: true }));
+            });
+        }
 
         const text = document.createElement("span");
         text.textContent = subj.code + " - " + subj.description;
@@ -41,6 +87,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         label.appendChild(text);
         classListEl.appendChild(label);
     }
+
 
     // Render next page
     function renderNextPage() {
