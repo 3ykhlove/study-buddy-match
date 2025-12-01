@@ -507,4 +507,92 @@ body {
     .dashboard-main {
         grid-template-columns: 1fr;
     }
+
+    .dashboard-header h2 {
+        font-size: 1.2rem;
+    }
+
+    .dashboard-meta {
+        display: block;
+        margin-top: 4px;
+    }
+}
+
+/* home dashboard layout */
+.dashboard-section {
+    margin-bottom: 40px;
+}
+
+.dashboard-header h2 {
+    margin: 0 0 6px;
+    font-size: 1.4rem;
+}
+
+.dashboard-meta {
+    margin: 0;
+    font-size: 0.9rem;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: #eef2ff; /* light indigo background */
+    display: inline-block;
+}
+
+/* top stat cards */
+.dashboard-stat-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+}
+
+.dashboard-stat-label {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--sb-muted);
+}
+
+.dashboard-stat-number {
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+/* bottom cards */
+.dashboard-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dashboard-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.dashboard-card-title {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.dashboard-card-subtitle {
+    margin: 2px 0 0;
+    font-size: 0.85rem;
+}
+
+/* small button size for header actions */
+.btn.btn-sm {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+}
+
+/* my group list items already use .item-row, so just tighten spacing */
+.dashboard-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
