@@ -99,6 +99,50 @@
             <button class="btn border-mint">Make a Group</button>
         </section>
     </div>
+
+    <!-- Dashboard (Logged-in Users Only) -->
+    <section id="dashboard" style="display:none; margin-top: 40px;">
+        <div class="dashboard-header">
+            <h2>Welcome back, <span id="dashboardName"></span>!</h2>
+            <p id="dashboardMeta" class="text-muted"></p>
+        </div>
+
+        <div class="dashboard-stats">
+            <div class="card">
+                <p class="text-muted">My Study Groups</p>
+                <h3 id="statGroups">0</h3>
+            </div>
+
+            <div class="card">
+                <p class="text-muted">Popular Groups</p>
+                <h3 id="statPopular">0</h3>
+            </div>
+
+            <div class="card">
+                <p class="text-muted">Active Chats</p>
+                <h3 id="statChats">0</h3>
+            </div>
+        </div>
+
+        <div class="dashboard-main">
+            <!-- My Groups -->
+            <div class="card">
+                <h3 style="margin-top:0;">My Study Groups</h3>
+                <ul id="myGroupList" class="dashboard-list">
+                    <li class="text-muted">You don’t have any study groups yet.</li>
+                </ul>
+            </div>
+
+            <!-- Popular Groups -->
+            <div class="card">
+                <h3 style="margin-top:0;">Popular Groups</h3>
+                <ul id="recommendedList" class="dashboard-list">
+                    <li class="text-muted">No recommendations yet.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
 </main>
 
 

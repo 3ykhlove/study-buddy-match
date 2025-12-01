@@ -213,6 +213,15 @@ body {
     grid-template-columns:repeat(3,1fr);
 }
 
+.item-row {
+    padding: 10px 12px;
+    border: 1px solid var(--sb-border);
+    border-radius: var(--sb-radius);
+    margin-bottom: 8px;
+    background: #fafafa;
+}
+
+
 @media (max-width:900px) {
     .grid-3 {
         grid-template-columns:1fr;
@@ -449,4 +458,52 @@ body {
     color: var(--sb-muted);
     font-size: 14px;
     text-align: center;
+}
+
+/* --- simple dashboard layout --- */
+.dashboard-header h2 {
+    margin: 0 0 4px;
+}
+.dashboard-header p {
+    margin: 0 0 20px;
+    font-size: 0.95rem;
+}
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--sb-space);
+    margin-bottom: 24px;
+}
+
+.dashboard-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sb-space);
+}
+
+.dashboard-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* 리스트 아이템 모양만 살짝 */
+.item-row {
+    padding: 10px 12px;
+    border: 1px solid var(--sb-border);
+    border-radius: var(--sb-radius);
+    margin-bottom: 8px;
+    background: #fafafa;
+    font-size: 0.9rem;
+}
+
+/* 모바일에서 한 줄씩 */
+@media (max-width: 900px) {
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+    .dashboard-main {
+        grid-template-columns: 1fr;
+    }
 }
