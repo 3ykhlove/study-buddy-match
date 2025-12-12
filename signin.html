@@ -21,17 +21,9 @@
 
     /* === GENERAL PAGE LAYOUT === */
     body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       background: linear-gradient(135deg, #b7e0ff, #d6c8ff, #ffd1e8);
       background-size: 300% 300%;
       animation: bgMove 12s ease infinite;
-      font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
     }
 
     @keyframes bgMove {
@@ -76,21 +68,6 @@
       to {
         transform: translateY(0);
         opacity: 1;
-      }
-    }
-
-    /* LOGO ANIMATION */
-    .auth-logo img {
-      width: 110px;
-      animation: popIn 1s ease forwards;
-      opacity: 0;
-      transform: scale(0.5);
-    }
-
-    @keyframes popIn {
-      to {
-        opacity: 1;
-        transform: scale(1);
       }
     }
 
@@ -156,7 +133,9 @@
 
     <!-- logo -->
     <div class="auth-logo">
-      <img src="images/logo.png" alt="Study Buddy" />
+      <a href="./index.html">
+        <img src="images/logo.png" alt="Study Buddy" />
+      </a>
     </div>
 
     <!-- joyful message -->
@@ -257,7 +236,6 @@
   <script src="js/auth.js"></script>
   <script src="js/date-time.js"></script>
   <script src="js/subject.js"></script>
-  <script src="js/auth-extra.js"></script>
 
 </body>
 </html>

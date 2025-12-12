@@ -24,6 +24,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const recommendedList = document.getElementById("recommendedList");
     const newGroupBtn = document.getElementById("newGroupBtn");
 
+    const authOnlyLinks = document.querySelectorAll(".auth-only");
+
+    /* Home menu logic */
+    if (user) {
+        authOnlyLinks.forEach(link => {
+            link.style.display = "inline-flex";
+        });
+    }
+
     /* Home button logic */
     if (signUpBtn) {
         setupHomeButton(signUpBtn, !!user);
