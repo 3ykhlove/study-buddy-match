@@ -80,6 +80,8 @@ function setupHomeButton(button, isLoggedIn) {
     }
 }
 
+});
+
 /* Profile dropdown menu + logout */
 function setupProfileMenu(opts) {
     const { user, profileMenu, profileBtn, dropdownMenu, profileCircle, profileName, logoutBtn } = opts;
@@ -268,5 +270,3 @@ document.addEventListener("mousemove", (e) => {
     setTimeout(() => bubble.remove(), 1200);
 });
 
-
-});

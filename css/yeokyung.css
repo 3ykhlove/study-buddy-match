@@ -21,7 +21,6 @@
         align-items:center;
         gap: var(--sb-space-lg);
         padding: 32px var(--sb-space-lg);
-        background: var(--sb-bg);
     }
     .banner h1 {
         margin: 0 0 8px;
