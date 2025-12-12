@@ -3,121 +3,261 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <!-- favicon -->
   <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-  <title>Study buddy Matching</title>
-  <!-- font -->
+  <title>Study Buddy Matching</title>
+
+  <!-- fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playball&display=swap" rel="stylesheet">
-  <!-- style -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playball&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
+
+  <!-- EXTRA ANIMATIONS (new) -->
+  <style>
+
+    /* === GENERAL PAGE LAYOUT === */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #b7e0ff, #d6c8ff, #ffd1e8);
+      background-size: 300% 300%;
+      animation: bgMove 12s ease infinite;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    @keyframes bgMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* FLOATING BUBBLES */
+    .bubble {
+      position: absolute;
+      width: 45px;
+      height: 45px;
+      background: rgba(255,255,255,0.45);
+      border-radius: 50%;
+      animation: floatUp 9s infinite ease-in-out;
+      filter: blur(3px);
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+
+    /* Add multiple bubbles */
+    .bubble:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .bubble:nth-child(2) { left: 30%; animation-delay: 2s; }
+    .bubble:nth-child(3) { left: 50%; animation-delay: 4s; }
+    .bubble:nth-child(4) { left: 70%; animation-delay: 1s; }
+    .bubble:nth-child(5) { left: 85%; animation-delay: 3s; }
+
+
+    /* CARD ANIMATION */
+    .auth-card {
+      animation: fadeUp 0.9s ease-out forwards;
+      transform: translateY(20px);
+      opacity: 0;
+    }
+
+    @keyframes fadeUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* LOGO ANIMATION */
+    .auth-logo img {
+      width: 110px;
+      animation: popIn 1s ease forwards;
+      opacity: 0;
+      transform: scale(0.5);
+    }
+
+    @keyframes popIn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* TABS ANIMATION */
+    .tab {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tab:hover {
+      color: #6b2cff;
+      transform: scale(1.06);
+      transition: 0.25s;
+    }
+
+    /* INPUT FOCUS GLOW */
+    .input:focus,
+    .select:focus {
+      outline: none;
+      box-shadow: 0 0 10px rgba(196, 142, 255, 0.7);
+      transform: scale(1.02);
+    }
+
+    /* BUTTON ANIMATION */
+    .btn-primary {
+      transition: 0.25s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+    }
+
+    /* JOYFUL MESSAGE */
+    .joy-message {
+      text-align: center;
+      font-size: 1.05rem;
+      color: #ffffff;
+      font-weight: 600;
+      margin-bottom: 15px;
+      text-shadow: 0px 2px 10px rgba(0,0,0,0.15);
+      animation: fadeIn 1.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+  </style>
 </head>
+
+
 <body>
 
-<main class="auth-page container">
-  <!-- logo -->
-  <div class="auth-logo">
-    <img src="images/logo.png" alt="Study Buddy" />
-  </div>
+  <!-- FLOATING BUBBLES FOR AMBIENT ANIMATION -->
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
 
-  <section class="card auth-card">
-    <h2 class="text-primary">Welcome</h2>
-    <p class="text-muted">Sign in to your account or create a new one</p>
+  <main class="auth-page container">
 
-    <!-- Tab -->
-    <input type="radio" name="auth-tab" id="tab-in" checked hidden />
-    <input type="radio" name="auth-tab" id="tab-up" hidden />
-
-    <div class="auth-tabs" role="tablist" aria-label="Auth tabs">
-      <label class="tab" for="tab-in" role="tab" aria-controls="panel-in">Sign In</label>
-      <label class="tab" for="tab-up" role="tab" aria-controls="panel-up">Sign Up</label>
-      <span class="tab-pill" aria-hidden="true"></span>
+    <!-- logo -->
+    <div class="auth-logo">
+      <img src="images/logo.png" alt="Study Buddy" />
     </div>
 
-    <!-- Signin Form -->
-    <form id="panel-in" class="auth-form signin" aria-labelledby="tab-in">
-      <label>Email</label>
-      <input class="input" type="email" placeholder="T0000000@mytru.ca" required />
-      <label>Password</label>
-      <input class="input" type="password" placeholder="********" required />
-      <button class="btn btn-primary lg" type="submit">Sign In</button>
-    </form>
+    <!-- joyful message -->
+    <div class="joy-message">
+      Find your perfect study partner.  
+      Learn together. Grow together. 📚✨
+    </div>
 
-    <!-- Signup Form -->
-    <form id="panel-up" class="auth-form signup" aria-labelledby="tab-up">
-      <!-- Full name / Email / Password -->
-      <label>Full Name</label>
-      <input class="input" type="text" placeholder="John Doe" required />
+    <section class="card auth-card">
+      <h2 class="text-primary">Welcome</h2>
+      <p class="text-muted">Sign in to your account or create a new one</p>
 
-      <label>Email</label>
-      <input class="input" type="email" placeholder="T0000000@mytru.ca" required />
+      <!-- Tab -->
+      <input type="radio" name="auth-tab" id="tab-in" checked hidden />
+      <input type="radio" name="auth-tab" id="tab-up" hidden />
 
-      <label>Password</label>
-      <input class="input" type="password" placeholder="Min 8 characters" required />
-
-      <!-- Classes -->
-      <label>Classes</label>
-      <div class="input-icon class-search">
-        <input id="classSearch" class="input" type="text" placeholder="Search classes..." autocomplete="off">
-        <img src="images/search.png" alt="search" />
+      <div class="auth-tabs" role="tablist" aria-label="Auth tabs">
+        <label class="tab" for="tab-in" role="tab" aria-controls="panel-in">Sign In</label>
+        <label class="tab" for="tab-up" role="tab" aria-controls="panel-up">Sign Up</label>
+        <span class="tab-pill" aria-hidden="true"></span>
       </div>
-      <!-- Classes list -->
-      <div class="class-list" id="classList" role="listbox" aria-label="Class options"></div>
 
-      <!-- Free Time Slots -->
-      <label>Free Time Slots</label>
-      <div class="time-row">
+      <!-- Signin Form -->
+      <form id="panel-in" class="auth-form signin" aria-labelledby="tab-in">
+        <label>Email</label>
+        <input class="input" type="email" placeholder="T0000000@mytru.ca" required />
+        <label>Password</label>
+        <input class="input" type="password" placeholder="********" required />
+        <button class="btn btn-primary lg" type="submit">Sign In</button>
+      </form>
+
+      <!-- Signup Form -->
+      <form id="panel-up" class="auth-form signup" aria-labelledby="tab-up">
+
+        <label>Full Name</label>
+        <input class="input" type="text" placeholder="John Doe" required />
+
+        <label>Email</label>
+        <input class="input" type="email" placeholder="T0000000@mytru.ca" required />
+
+        <label>Password</label>
+        <input class="input" type="password" placeholder="Min 8 characters" required />
+
+        <label>Classes</label>
+        <div class="input-icon class-search">
+          <input id="classSearch" class="input" type="text" placeholder="Search classes..." autocomplete="off">
+          <img src="images/search.png" alt="search" />
+        </div>
+
+        <div class="class-list" id="classList" role="listbox" aria-label="Class options"></div>
+
+        <label>Free Time Slots</label>
+        <div class="time-row">
+          <div class="select-wrap">
+            <select id="daySelect" class="select" aria-label="Day">
+              <option hidden value="">Day</option>
+              <option>Mon</option><option>Tue</option><option>Wed</option>
+              <option>Thu</option><option>Fri</option><option>Sat</option><option>Sun</option>
+            </select>
+          </div>
+          <div class="select-wrap">
+            <select id="timeSelect" class="select" aria-label="Time">
+              <option hidden value="">Select time</option>
+              <option>9–11am</option>
+              <option>11am–1pm</option>
+              <option>1–3pm</option>
+              <option>3–5pm</option>
+              <option>5–7pm</option>
+            </select>
+          </div>
+          <button class="btn btn-ghost add-btn" type="button" id="addSlot">Add</button>
+        </div>
+
+        <div class="chips" id="timeChips" aria-live="polite">
+          <!-- Selected chips -->
+        </div>
+
+        <label>Study Purpose</label>
         <div class="select-wrap">
-          <select id="daySelect" class="select" aria-label="Day">
-            <option hidden value="">Day</option>
-            <option>Mon</option><option>Tue</option><option>Wed</option>
-            <option>Thu</option><option>Fri</option><option>Sat</option><option>Sun</option>
+          <select class="select" required>
+            <option>General Study</option>
+            <option>Test</option>
+            <option>Final</option>
           </select>
         </div>
-        <div class="select-wrap">
-          <select id="timeSelect" class="select" aria-label="Time">
-            <option hidden value="">Select time</option>
-            <option>9–11am</option>
-            <option>11am–1pm</option>
-            <option>1–3pm</option>
-            <option>3–5pm</option>
-            <option>5–7pm</option>
-          </select>
-        </div>
-        <button class="btn btn-ghost add-btn" type="button" id="addSlot">Add</button>
-      </div>
 
-      <div class="chips" id="timeChips" aria-live="polite">
-        <!-- Showing selected Chips -->
-      </div>
+        <button class="btn btn-primary lg" type="submit">Create Account</button>
+      </form>
+    </section>
+  </main>
 
-      <!-- Study Purpose -->
-      <label>Study Purpose</label>
-      <div class="select-wrap">
-        <select class="select" required>
-          <option>General Study</option>
-          <option>Test</option>
-          <option>Final</option>
-        </select>
-      </div>
+  <!-- footer -->
+  <footer class="footer container">
+    © 2025 Study Buddy
+  </footer>
 
-      <button class="btn btn-primary lg" type="submit">Create Account</button>
-    </form>
-  </section>
-</main>
+  <!-- scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/date-time.js"></script>
+  <script src="js/subject.js"></script>
+  <script src="js/auth-extra.js"></script>
 
-<!-- footer -->
-<footer class="footer container">
-  © 2025 Study Buddy
-</footer>
-<!-- footer -->
-
-
-
-<!-- js -->
-<script src="js/auth.js"></script>
-<script src="js/date-time.js"></script>
-<script src="js/subject.js"></script>
 </body>
 </html>
