@@ -111,18 +111,14 @@ document.addEventListener("DOMContentLoaded", () =>
         window.location.href = "signin.html";
         return;
     }
-    let user;
-
-    try { user = JSON.parse(raw); } catch (e) { user = null; }
-        if (!user) 
-        {
-            alert("User data corrupt. Sign in again.");
-            window.location.href = "signin.html";
-            return;
-        }
+    
+    //user variables
+    let user = JSON.parse(raw);
+    let editableUser = null;
 
     //normalize arrays
-    if (!Array.isArray(user.classes)) {
+    if (!Array.isArray(user.classes)) 
+    {
         user.classes = typeof user.classes === "string" && user.classes.trim()
             ? user.classes.split(",").map(s => s.trim()).filter(Boolean)
             : [];
@@ -274,6 +270,17 @@ document.addEventListener("DOMContentLoaded", () =>
 
         document.querySelector(".my-info-panel")?.classList.toggle("editing", enabled);
 
+        if (enabled && !editableUser)
+        {
+            editableUser = JSON.parse(JSON.stringify(user));
+        }
+
+        if (!enabled)
+        {
+            editableUser = null;
+            editableTimeSlots = Array.isArray(user.timeSlots) ? user.timeSlots.slice() : [];
+            editableStudyPurpose = user.studyPurpose || (studyPurposeMP ? studyPurposeMP.options[0].text : (studyPurposeInput ? studyPurposeInput.value : ""));
+        }
         if (enabled) beginClassEditing();
         else stopClassEditing();
 
@@ -297,11 +304,12 @@ document.addEventListener("DOMContentLoaded", () =>
         //populating editable fields
         if (enabled) 
         {
-            editableTimeSlots = Array.isArray(user.timeSlots) ? user.timeSlots.slice() : [];
-            editableStudyPurpose = user.studyPurpose || (studyPurposeMP ? studyPurposeMP.options[0].text : "");
+            editableTimeSlots = Array.isArray(editableUser.timeSlots) ? editableUser.timeSlots.slice() : [];
+            editableStudyPurpose = editableUser.studyPurpose || "";
             if (studyPurposeMP) studyPurposeMP.value = editableStudyPurpose;
             if (studyPurposeInput) studyPurposeInput.value = editableStudyPurpose;
             renderEditableTimeChips();
+            renderEditableClassChips();
         } 
         else 
         {
@@ -340,33 +348,42 @@ document.addEventListener("DOMContentLoaded", () =>
 
         //function to render editable class chips
         function renderEditableClassChips() 
-        {
-            chipContainer.innerHTML = "";
-            if (user.classes.length === 0) 
-            {
-                chipContainer.innerHTML = `<p style="opacity:0.6;">No classes selected</p>`;
-                return;
-            }
-            user.classes.forEach(c => 
-            {
-                const chip = document.createElement("div");
-                chip.className = "chip1 selected";
-                chip.textContent = c;
-
-                const removeBtn = document.createElement("button");
-                removeBtn.type = "button";
-                removeBtn.textContent = "×";
-                removeBtn.style.marginLeft = "6px";
-                removeBtn.addEventListener("click", () => 
-                {
-                    user.classes = user.classes.filter(x => x !== c);
-                    renderEditableClassChips();
-                });
-
-                chip.appendChild(removeBtn);
-                chipContainer.appendChild(chip);
-            });
-        }
+         {
+             chipContainer.innerHTML = "";
+             // prefer editable copy while editing, otherwise show live user classes
+             const classes = (editing && editableUser && Array.isArray(editableUser.classes))
+                 ? editableUser.classes
+                 : (Array.isArray(user.classes) ? user.classes : []);
+ 
+             if (classes.length === 0) 
+             {
+                 chipContainer.innerHTML = `<p style="opacity:0.6;">No classes selected</p>`;
+                 return;
+             }
+             classes.forEach(c => 
+             {
+                 const chip = document.createElement("div");
+                 chip.className = "chip1 selected";
+                 chip.textContent = c;
+ 
+                 const removeBtn = document.createElement("button");
+                 removeBtn.type = "button";
+                 removeBtn.textContent = "×";
+                 removeBtn.style.marginLeft = "6px";
+                 removeBtn.addEventListener("click", () => 
+                 {
+                     if (editing && editableUser && Array.isArray(editableUser.classes)) {
+                         editableUser.classes = editableUser.classes.filter(x => x !== c);
+                     } else if (Array.isArray(user.classes)) {
+                         user.classes = user.classes.filter(x => x !== c);
+                     }
+                     renderEditableClassChips();
+                 });
+ 
+                 chip.appendChild(removeBtn);
+                 chipContainer.appendChild(chip);
+             });
+         }
 
         //function to buuld class dropdown menu
         function filterClassDropdown() 
@@ -407,15 +424,18 @@ document.addEventListener("DOMContentLoaded", () =>
                 item.tabIndex = 0;
 
                 item.addEventListener("click", () => 
-                {
-                    if (!user.classes.includes(cls)) 
-                    {
-                        user.classes.push(cls);
-                        renderEditableClassChips();
-                    }
-                    classSearchMP.value = "";
-                    classListMP.style.display = "none";
-                });
+                 {
+                     // ensure editableUser exists and has classes array
+                     if (!editableUser) editableUser = JSON.parse(JSON.stringify(user));
+                     if (!Array.isArray(editableUser.classes)) editableUser.classes = Array.isArray(user.classes) ? user.classes.slice() : [];
+                     if (!editableUser.classes.includes(cls)) 
+                     {
+                         editableUser.classes.push(cls);
+                         renderEditableClassChips();
+                     }
+                     classSearchMP.value = "";
+                     classListMP.style.display = "none";
+                 });
 
                 item.addEventListener("keydown", (e) => 
                 {
@@ -478,11 +498,14 @@ document.addEventListener("DOMContentLoaded", () =>
                 const newStudyPurpose = studyPurposeMP ? studyPurposeMP.value :
                     (studyPurposeInput ? studyPurposeInput.value : editableStudyPurpose);
 
-                const newTimeSlots = editableTimeSlots.slice();
-                user.timeSlots = newTimeSlots;
-                user.studyPurpose = newStudyPurpose;
+                editableUser.timeSlots = editableTimeSlots.slice();
+                editableUser.studyPurpose = newStudyPurpose;
 
+                user = JSON.parse(JSON.stringify(editableUser));
                 localStorage.setItem("user", JSON.stringify(user));
+
+                //resets editableUser so it can be reused
+                editableUser = null;
 
                 renderTimeChipsFromArray(user.timeSlots);
                 if (studyPurposeMP) studyPurposeMP.value = user.studyPurpose ||
