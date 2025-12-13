@@ -90,7 +90,7 @@
                     <input id="classSearchMP" class="input" type="text" placeholder="Search classes..." autocomplete="off">
                 </div>
                 <!--classes list-->
-                <div class="class-list" id="classListMP" role="listbox" aria-label="Class options"></div>
+                <div class="class-list" id="classListMP" role="listbox" label="Class options"></div>
             </div>
             <!--free time section-->
             <h3>Your Free Time</h3>
@@ -143,21 +143,95 @@
         </div>
         <button id="edit-profile-btn">Edit profile</button>
     </div>
-<!--group panel-->
+
+    <!--group panel-->
     <div class="my-groups-panel">
         <h2>My Groups</h2>
 
-        <div class="groups-list">
-            <div class="group-item">
-                <div class="group-main">
-                    <span class="group-name">Group Name Here</span>
-                    <span class="group-members">Max 5 members</span>
-                </div>
+        <div class="group-class-search-container classDiv">
+            <input id="groupClassSearch" class="input" type="text" placeholder="Search classes..." autocomplete="off">
+            <div class="class-list" id="groupClassList" role="listbox" label="Class options"></div>
+        </div>
+        <div class="groups-list" id="groupList"></div>
 
-                <div class="group-actions">
-                    <button class="view-group-btn">View</button>
-                    <button class="edit-group-btn">Edit</button>
-                    <button class="invite-group-btn">Invite</button>
+        <!--view button popup-->
+        <div id="viewGroupPopup" class="popup-backdrop" hidden>
+            <div class="popup">
+                <header><h3 id="viewGroupTitle"></h3><button class="close-popup" data-popup="viewGroupPopup">×</button></header>
+                <div class="popup-body" id="viewGroupBody"></div>
+                <div class="popup-actions"><button class="close-popup" data-popup="viewGroupPopup">Close</button></div>
+            </div>
+        </div>
+
+       <!--edit buttom popup-->
+       <div id="editGroupPopup" class="popup-backdrop" hidden>
+            <div class="popup">
+                <header><h3>Edit group</h3><button class="close-popup" data-popup="editGroupPopup">×</button></header>
+                <div class="popup-body">
+                    <form id="editGroupForm">
+                        <input name="name" class="input" placeholder="Group name" />
+                        <input type="hidden" name="course" id="editCourseInput" />
+                        <input type="hidden" name="time" id="editTimeInput" />
+
+                        <div class="classDiv">
+                            <h4>Class</h4>
+                            <div id="editClassChips" class="chip-container1"></div>
+
+                            <div class="class-search">
+                                <input id="editClassSearch" class="input" type="text" placeholder="Search classes..." autocomplete="off">
+                            </div>
+
+                            <div class="class-list" id="editClassList" role="listbox"></div>
+                        </div>
+
+                    <!--date/time selection lists-->
+                        <h4>Meeting Time</h4>
+                        <div class="formRow">
+                            <label for="editDaySelect">Day:</label>
+                            <select id="editDaySelect">
+                                <option value="">Select a day</option>
+                                <option value="Mon">Monday</option>
+                                <option value="Tues">Tuesday</option>
+                                <option value="Wed">Wednesday</option>
+                                <option value="Thurs">Thursday</option>
+                                <option value="Fri">Friday</option>
+                                <option value="Sat">Saturday</option>
+                                <option value="Sun">Sunday</option>
+                            </select>
+                        </div>
+                        
+                        <div class="formRow">
+                            <label for="editTimeSelect">Time:</label>
+                            <select id="editTimeSelect">
+                                <option value="">Select a time</option>
+                                <option value="9-11">9AM - 11AM</option>
+                                <option value="11-1">11AM - 1PM</option>
+                                <option value="1-3">1PM - 3PM</option>
+                                <option value="3-5">3PM - 5PM</option>
+                                <option value="5-7">5PM - 7PM</option>
+                            </select>
+                        </div>
+
+                        <div id="editMembersList" class="members-list"></div>
+                        <div class="popup-actions">
+                            <button type="button" class="close-popup" data-popup="editGroupPopup">Cancel</button>
+                            <button type="submit">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--invite button popup-->
+        <div id="inviteGroupPopup" class="popup-backdrop" hidden>
+            <div class="popup">
+                <header><h3 id="inviteGroupTitle"></h3><button class="close-popup" data-popup="inviteGroupPopup">×</button></header>
+                <div class="popup-body">
+                    <div id="inviteUserList" class="invite-user-grid" role="list"></div>
+                    <div class="popup-actions">
+                        <button type="button" class="close-popup" data-popup="inviteGroupPopup">Cancel</button>
+                        <button id="inviteConfirmBtn" type="button">Invite selected</button>
+                    </div>
                 </div>
             </div>
         </div>
