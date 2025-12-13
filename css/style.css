@@ -598,3 +598,125 @@ body {
     flex-direction: column;
     gap: 6px;
 }
+
+/* ── Neon purple soft click effect for cards ── */
+.card {
+    position: relative;
+}
+
+.card::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: inherit;
+    background: radial-gradient(
+            circle at center,
+            color-mix(in oklab, var(--sb-primary) 45%, white 5%),
+            transparent 70%
+    );
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+}
+
+.card:active::after {
+    opacity: 1;
+}
+
+.card:active {
+    box-shadow:
+            var(--sb-shadow),
+            0 0 14px color-mix(in oklab, var(--sb-primary) 55%, transparent),
+            0 0 28px color-mix(in oklab, var(--sb-primary) 35%, transparent);
+}
+
+/* =====================================================
+   GLOBAL SOFT BACKGROUND HUE (UNIFIED)
+   ===================================================== */
+
+body {
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* ambient hue layer */
+body::before {
+    content: "";
+    position: fixed;
+    inset: -20%;
+    z-index: -1;
+    pointer-events: none;
+
+    background: linear-gradient(
+            120deg,
+            rgba(108, 99, 255, 0.14),
+            rgba(168, 85, 247, 0.10),
+            rgba(108, 99, 255, 0.12)
+    );
+
+    filter: blur(80px);
+    animation: ambientHueShift 28s ease-in-out infinite;
+}
+
+/* very subtle motion */
+@keyframes ambientHueShift {
+    0% {
+        transform: translateX(-6%) translateY(0);
+    }
+    50% {
+        transform: translateX(6%) translateY(-4%);
+    }
+    100% {
+        transform: translateX(-6%) translateY(0);
+    }
+}
+/* =====================================================
+   GLOBAL NEON INTERACTION GLOW
+   ===================================================== */
+
+/* base interactive glow setup */
+.card,
+.btn,
+a,
+.item-row,
+.dashboard-list li {
+    position: relative;
+    transition:
+            box-shadow 0.25s ease,
+            transform 0.2s ease;
+}
+
+/* hover glow */
+.card:hover,
+.btn:hover,
+a:hover,
+.item-row:hover,
+.dashboard-list li:hover {
+    box-shadow:
+            0 0 0 1px rgba(108, 99, 255, 0.35),
+            0 0 18px rgba(108, 99, 255, 0.35),
+            0 0 32px rgba(168, 85, 247, 0.25);
+}
+
+/* active (click) glow */
+.card:active,
+.btn:active,
+a:active,
+.item-row:active,
+.dashboard-list li:active {
+    box-shadow:
+            0 0 0 1px rgba(108, 99, 255, 0.55),
+            0 0 22px rgba(108, 99, 255, 0.55),
+            0 0 40px rgba(168, 85, 247, 0.35);
+    transform: scale(0.985);
+}
+
+/* keyboard accessibility */
+.card:focus-visible,
+.btn:focus-visible,
+a:focus-visible {
+    outline: none;
+    box-shadow:
+            0 0 0 2px rgba(108, 99, 255, 0.45),
+            0 0 26px rgba(108, 99, 255, 0.35);
+}

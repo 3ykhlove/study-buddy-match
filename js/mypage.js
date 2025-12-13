@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => 
+document.addEventListener("DOMContentLoaded", () =>
 {
     const $ = id => document.getElementById(id);
     const exists = id => !!$(id);
@@ -106,19 +106,19 @@ document.addEventListener("DOMContentLoaded", () =>
     ];
     //load user data
     const raw = localStorage.getItem("user");
-    if (!raw) 
+    if (!raw)
     {
         alert("You must sign in first.");
         window.location.href = "signin.html";
         return;
     }
-    
+
     //user variables
     let user = JSON.parse(raw);
     let editableUser = null;
 
     //normalize arrays
-    if (!Array.isArray(user.classes)) 
+    if (!Array.isArray(user.classes))
     {
         user.classes = typeof user.classes === "string" && user.classes.trim()
             ? user.classes.split(",").map(s => s.trim()).filter(Boolean)
@@ -158,23 +158,23 @@ document.addEventListener("DOMContentLoaded", () =>
     //populating basic info
     if (fullNameDisplay) fullNameDisplay.textContent = user.fullName || "No Name";
     if (emailDisplay) emailDisplay.textContent = user.email || "No Email";
-    if (profileCircleDisplay) 
+    if (profileCircleDisplay)
     {
         const initials = (user.fullName || "?").split(" ").map(n => n[0] || "").join("").toUpperCase();
         profileCircleDisplay.textContent = initials;
     }
 
     //render class chips function
-    function renderClassChips() 
+    function renderClassChips()
     {
         if (!chipContainer) return;
         chipContainer.innerHTML = "";
-        if (!Array.isArray(user.classes) || user.classes.length === 0) 
+        if (!Array.isArray(user.classes) || user.classes.length === 0)
         {
             chipContainer.innerHTML = `<p style="opacity:0.6;">No classes selected</p>`;
             return;
         }
-        user.classes.forEach(c => 
+        user.classes.forEach(c =>
         {
             const chip = document.createElement("div");
             chip.className = "chip1";
@@ -185,17 +185,17 @@ document.addEventListener("DOMContentLoaded", () =>
     renderClassChips();
 
     //render time chips function
-    function renderTimeChipsFromArray(arr) 
+    function renderTimeChipsFromArray(arr)
     {
-        if (timeChipsMP) 
+        if (timeChipsMP)
         {
             timeChipsMP.innerHTML = "";
-            if (!arr || arr.length === 0) 
+            if (!arr || arr.length === 0)
             {
                 timeChipsMP.innerHTML = `<p style="opacity:0.6;">No free time set</p>`;
                 return;
             }
-            arr.forEach(slot => 
+            arr.forEach(slot =>
             {
                 const chip = document.createElement("div");
                 chip.className = "chip";
@@ -209,19 +209,19 @@ document.addEventListener("DOMContentLoaded", () =>
     renderTimeChipsFromArray(user.timeSlots);
 
     //populating study purpose
-    if (studyPurposeMP) 
+    if (studyPurposeMP)
     {
         studyPurposeMP.value = user.studyPurpose || "General study";
         studyPurposeMP.disabled = true;
     }
-    if (studyPurposeInput) 
+    if (studyPurposeInput)
     {
         studyPurposeInput.value = user.studyPurpose || "";
         studyPurposeInput.disabled = true;
     }
-    if (studyPurposeDisplay) 
+    if (studyPurposeDisplay)
     {
-    studyPurposeDisplay.textContent = user.studyPurpose || "No study purpose set";
+        studyPurposeDisplay.textContent = user.studyPurpose || "No study purpose set";
     }
 
     //editing state
@@ -229,21 +229,21 @@ document.addEventListener("DOMContentLoaded", () =>
     let editableTimeSlots = user.timeSlots.slice();
     let editableStudyPurpose = user.studyPurpose ||
         (studyPurposeMP ? studyPurposeMP.options[0].text :
-        (studyPurposeInput ? studyPurposeInput.value : ""));
+            (studyPurposeInput ? studyPurposeInput.value : ""));
 
     //render editable time chips function
-    function renderEditableTimeChips() 
+    function renderEditableTimeChips()
     {
-        if (timeChipsMP) 
+        if (timeChipsMP)
         {
             timeChipsMP.innerHTML = "";
-            if (!Array.isArray(editableTimeSlots) || editableTimeSlots.length === 0) 
+            if (!Array.isArray(editableTimeSlots) || editableTimeSlots.length === 0)
             {
                 timeChipsMP.innerHTML = `<p style="opacity:0.6;">No free time set</p>`;
-            } 
-            else 
+            }
+            else
             {
-                editableTimeSlots.forEach(slot => 
+                editableTimeSlots.forEach(slot =>
                 {
                     const chip = document.createElement("div");
                     chip.className = "chip";
@@ -252,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () =>
                     const btn = document.createElement("button");
                     btn.type = "button";
                     btn.textContent = "×";
-                    btn.addEventListener("click", () => 
+                    btn.addEventListener("click", () =>
                     {
                         editableTimeSlots = editableTimeSlots.filter(s => s !== slot);
                         renderEditableTimeChips();
@@ -266,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () =>
     }
 
     //set editing mode function
-    function setEditing(enabled) 
+    function setEditing(enabled)
     {
         editing = enabled;
 
@@ -300,12 +300,12 @@ document.addEventListener("DOMContentLoaded", () =>
         if (studyPurposeDisplay) studyPurposeDisplay.style.display = enabled ? "none" : "block";
         if (studyPurposeMP) studyPurposeMP.disabled = !enabled;
         if (studyPurposeInput) studyPurposeInput.disabled = !enabled;
-        
+
         //save button visibility toggle
         if (saveBtn) saveBtn.style.display = enabled ? "inline-block" : "none";
 
         //populating editable fields
-        if (enabled) 
+        if (enabled)
         {
             editableTimeSlots = Array.isArray(editableUser.timeSlots) ? editableUser.timeSlots.slice() : [];
             editableStudyPurpose = editableUser.studyPurpose || "";
@@ -313,8 +313,8 @@ document.addEventListener("DOMContentLoaded", () =>
             if (studyPurposeInput) studyPurposeInput.value = editableStudyPurpose;
             renderEditableTimeChips();
             renderEditableClassChips();
-        } 
-        else 
+        }
+        else
         {
             renderTimeChipsFromArray(user.timeSlots);
             if (studyPurposeMP) studyPurposeMP.value = user.studyPurpose || (studyPurposeMP.options[0].text);
@@ -324,22 +324,22 @@ document.addEventListener("DOMContentLoaded", () =>
         if (enabled && classSearchMP) classSearchMP.focus && classSearchMP.focus();
     }
     //popup help functions
-    function showPopup(popupId) 
+    function showPopup(popupId)
     {
         document.getElementById(popupId).hidden = false;
     }
 
-    function closePopup(popupId) 
+    function closePopup(popupId)
     {
         document.getElementById(popupId).hidden = true;
     }
 
-    document.querySelectorAll(".close-popup").forEach(btn => 
+    document.querySelectorAll(".close-popup").forEach(btn =>
     {
         btn.addEventListener("click", () => closePopup(btn.dataset.popup));
     });
 
-    function openEditGroupPopup(group) 
+    function openEditGroupPopup(group)
     {
         const popup = document.getElementById("editGroupPopup");
         const form = document.getElementById("editGroupForm");
@@ -350,7 +350,7 @@ document.addEventListener("DOMContentLoaded", () =>
 
         const chipContainer = document.getElementById("editClassChips");
         chipContainer.innerHTML = "";
-        (group.classes || []).forEach(cls => 
+        (group.classes || []).forEach(cls =>
         {
             const chip = document.createElement("div");
             chip.className = "chip1 selected";
@@ -377,19 +377,19 @@ document.addEventListener("DOMContentLoaded", () =>
 
 
     //entering edit mode, show class chips and dropdown
-    function beginClassEditing() 
+    function beginClassEditing()
     {
         const searchContainer = document.querySelector(".class-search");
         if (searchContainer) searchContainer.style.display = "flex";
 
         if (classSearchMP) classSearchMP.style.display = "block";
-        
+
         classSearchMP.value = "";
         renderEditableClassChips();
     }
 
     //exiting edit mode, show class chips but hide dropdown
-    function stopClassEditing() 
+    function stopClassEditing()
     {
         classSearchMP.style.display = "none";
         classListMP.style.display = "none";
@@ -398,24 +398,24 @@ document.addEventListener("DOMContentLoaded", () =>
     }
 
     //searchable class list logic
-    if (classSearchMP && classListMP && chipContainer) 
+    if (classSearchMP && classListMP && chipContainer)
     {
 
         //function to render editable class chips
-        function renderEditableClassChips() 
+        function renderEditableClassChips()
         {
             chipContainer.innerHTML = "";
             // prefer editable copy while editing, otherwise show live user classes
             const classes = (editing && editableUser && Array.isArray(editableUser.classes))
                 ? editableUser.classes
                 : (Array.isArray(user.classes) ? user.classes : []);
- 
-            if (classes.length === 0) 
+
+            if (classes.length === 0)
             {
                 chipContainer.innerHTML = `<p style="opacity:0.6;">No classes selected</p>`;
                 return;
             }
-            classes.forEach(c => 
+            classes.forEach(c =>
             {
                 const chip = document.createElement("div");
                 chip.className = "chip1 selected";
@@ -425,40 +425,40 @@ document.addEventListener("DOMContentLoaded", () =>
                 removeBtn.type = "button";
                 removeBtn.textContent = "×";
                 removeBtn.style.marginLeft = "6px";
-                removeBtn.addEventListener("click", () => 
+                removeBtn.addEventListener("click", () =>
                 {
-                    if (editing && editableUser && Array.isArray(editableUser.classes)) 
+                    if (editing && editableUser && Array.isArray(editableUser.classes))
                     {
                         editableUser.classes = editableUser.classes.filter(x => x !== c);
-                    } 
-                    else if (Array.isArray(user.classes)) 
+                    }
+                    else if (Array.isArray(user.classes))
                     {
                         user.classes = user.classes.filter(x => x !== c);
                     }
                     renderEditableClassChips();
                 });
- 
+
                 chip.appendChild(removeBtn);
                 chipContainer.appendChild(chip);
             });
         }
 
         //function to buuld class dropdown menu
-        function filterClassDropdown() 
+        function filterClassDropdown()
         {
             const query = classSearchMP.value.toLowerCase().trim();
 
             classListMP.innerHTML = "";
             //hiding dropdown in normal state
             // hide dropdown if not editing
-            if (!editing) 
+            if (!editing)
             {
                 classListMP.style.display = "none";
                 return;
             }
 
             // hide dropdown if query is empty
-            if (query === "") 
+            if (query === "")
             {
                 classListMP.style.display = "none";
                 return;
@@ -470,7 +470,7 @@ document.addEventListener("DOMContentLoaded", () =>
             //filter subjects based on query
             const filtered = SUBJECT_LIST.filter(cls => cls.toLowerCase().includes(query));
 
-            if (filtered.length === 0) 
+            if (filtered.length === 0)
             {
                 const emptyItem = document.createElement("div");
                 emptyItem.className = "dropdown-item";
@@ -481,19 +481,19 @@ document.addEventListener("DOMContentLoaded", () =>
             }
 
             //building dropdown items
-            filtered.forEach(cls => 
+            filtered.forEach(cls =>
             {
                 const item = document.createElement("div");
                 item.className = "dropdown-item";
                 item.textContent = cls;
                 item.tabIndex = 0;
 
-                item.addEventListener("click", () => 
+                item.addEventListener("click", () =>
                 {
                     // ensure editableUser exists and has classes array
                     if (!editableUser) editableUser = JSON.parse(JSON.stringify(user));
                     if (!Array.isArray(editableUser.classes)) editableUser.classes = Array.isArray(user.classes) ? user.classes.slice() : [];
-                    if (!editableUser.classes.includes(cls)) 
+                    if (!editableUser.classes.includes(cls))
                     {
                         editableUser.classes.push(cls);
                         renderEditableClassChips();
@@ -502,9 +502,9 @@ document.addEventListener("DOMContentLoaded", () =>
                     classListMP.style.display = "none";
                 });
 
-                item.addEventListener("keydown", (e) => 
+                item.addEventListener("keydown", (e) =>
                 {
-                    if (e.key === "Enter" || e.key === " ") 
+                    if (e.key === "Enter" || e.key === " ")
                     {
                         item.click();
                     }
@@ -516,451 +516,451 @@ document.addEventListener("DOMContentLoaded", () =>
 
         //event listeners for class search input
         classSearchMP.addEventListener("input", filterClassDropdown);
-        classSearchMP.addEventListener("focus", () => 
+        classSearchMP.addEventListener("focus", () =>
         {
             if (editing) filterClassDropdown();
         });
-        }
+    }
 
-        //edit button logic
-        if (editBtn) 
+    //edit button logic
+    if (editBtn)
+    {
+        editBtn.addEventListener("click", () =>
         {
-            editBtn.addEventListener("click", () => 
+            if (!editing)
             {
-                if (!editing) 
-                {
-                    setEditing(true);
-                    editBtn.textContent = "Cancel";
-                } else 
-                {
-                    setEditing(false);
-                    editBtn.textContent = "Edit profile";
-                }
-            });
-        }
-
-        //add time slot logic
-        if (addSlotMP) 
-        {
-            addSlotMP.addEventListener("click", () => 
+                setEditing(true);
+                editBtn.textContent = "Cancel";
+            } else
             {
-                const day = daySelectMP ? daySelectMP.value : "";
-                const time = timeSelectMP ? timeSelectMP.value : "";
-                if (!day || !time) { alert("Please select both a day and time!"); return; }
-                const slot = `${day} ${time}`;
-                if (editableTimeSlots.includes(slot)) { alert("That time slot is already added!"); return; }
-                editableTimeSlots.push(slot);
-                renderEditableTimeChips();
-            });
-        }
-
-        //save button logic
-        if (saveBtn) 
-        {
-            saveBtn.addEventListener("click", () => 
-            {
-                const newStudyPurpose = studyPurposeMP ? studyPurposeMP.value :
-                    (studyPurposeInput ? studyPurposeInput.value : editableStudyPurpose);
-
-                editableUser.timeSlots = editableTimeSlots.slice();
-                editableUser.studyPurpose = newStudyPurpose;
-
-                user = JSON.parse(JSON.stringify(editableUser));
-                localStorage.setItem("user", JSON.stringify(user));
-
-                //resets editableUser so it can be reused
-                editableUser = null;
-
-                renderTimeChipsFromArray(user.timeSlots);
-                if (studyPurposeMP) studyPurposeMP.value = user.studyPurpose ||
-                    (studyPurposeMP.options[0] ? studyPurposeMP.options[0].text : "");
-                if (studyPurposeInput) studyPurposeInput.value = user.studyPurpose || "";
-                if (studyPurposeDisplay) studyPurposeDisplay.textContent = user.studyPurpose || "";
-
                 setEditing(false);
-                if (editBtn) editBtn.textContent = "Edit profile";
-                alert("Profile updated!");
-            });
-        }
-
-        //groups panel
-        const groupListEl = $("groupList");
-        const viewPopupEl = $("viewGroupPopup");
-        const viewTitleEl = $("viewGroupTitle");
-        const viewBodyEl = $("viewGroupBody");
-        const editPopupEl = $("editGroupPopup");
-        const editFormEl = $("editGroupForm");
-        const editMembersListEl = $("editMembersList");
-        const invitePopupEl = $("inviteGroupPopup");
-        const inviteTitleEl = $("inviteGroupTitle");
-        const inviteUserListEl = $("inviteUserList");
-        const inviteConfirmBtn = $("inviteConfirmBtn");
-
-        //helpers for persistent storage
-        const loadGroups = () => 
-        {
-            const rawG = localStorage.getItem("groups");
-            try 
-            { 
-                return rawG ? JSON.parse(rawG) : []; 
-            } 
-            catch (e) 
-            { 
-                console.error("groups parse", e); return []; 
+                editBtn.textContent = "Edit profile";
             }
-        };
-        const saveGroups = g => localStorage.setItem("groups", JSON.stringify(g));
-        const loadUsers = () => 
+        });
+    }
+
+    //add time slot logic
+    if (addSlotMP)
+    {
+        addSlotMP.addEventListener("click", () =>
         {
-            const rawU = localStorage.getItem("users");
-            try 
-            { 
-                return rawU ? JSON.parse(rawU) : []; 
-            } 
-            catch (e) 
-            {
-                console.error("users parse", e); return []; 
-            }
-        };
+            const day = daySelectMP ? daySelectMP.value : "";
+            const time = timeSelectMP ? timeSelectMP.value : "";
+            if (!day || !time) { alert("Please select both a day and time!"); return; }
+            const slot = `${day} ${time}`;
+            if (editableTimeSlots.includes(slot)) { alert("That time slot is already added!"); return; }
+            editableTimeSlots.push(slot);
+            renderEditableTimeChips();
+        });
+    }
 
-        //small esc helper (looked this up when I was researching optimizations)
-        const esc = s => s == null ? "" : String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-
-        //popup show/hide
-        function showPopup(id) { const e = $(id); if (e) e.hidden = false; }
-        function hidePopup(id) { const e = $(id); if (e) e.hidden = true; }
-
-        //function for creating a group item and displaying some of its info
-        function createGroupItemNode(g) 
+    //save button logic
+    if (saveBtn)
+    {
+        saveBtn.addEventListener("click", () =>
         {
-            const item = document.createElement("div");
-            item.className = "group-item";
+            const newStudyPurpose = studyPurposeMP ? studyPurposeMP.value :
+                (studyPurposeInput ? studyPurposeInput.value : editableStudyPurpose);
 
-            const main = document.createElement("div");
-            main.className = "group-main";
-            const name = document.createElement("div"); name.className = "group-name"; name.textContent = g.name || "Untitled group";
-            const meta = document.createElement("div"); meta.className = "group-members";
-            const count = Array.isArray(g.members) ? g.members.length : 0;
-            meta.textContent = `${g.course || "No class set"} · ${g.time || "Time not set"} · ${count} member${count===1?'':'s'}`;
-            main.appendChild(name); main.appendChild(meta);
+            editableUser.timeSlots = editableTimeSlots.slice();
+            editableUser.studyPurpose = newStudyPurpose;
 
-            const actions = document.createElement("div"); actions.className = "group-actions";
-            const viewBtn = document.createElement("button"); viewBtn.type = "button"; viewBtn.className = "view-group-btn"; viewBtn.textContent = "View";
-            const editBtn = document.createElement("button"); editBtn.type = "button"; editBtn.className = "edit-group-btn"; editBtn.textContent = "Edit";               
-            const inviteBtn = document.createElement("button"); inviteBtn.type = "button"; inviteBtn.className = "invite-group-btn"; inviteBtn.textContent = "Invite";
-            actions.appendChild(viewBtn); actions.appendChild(editBtn); actions.appendChild(inviteBtn);
+            user = JSON.parse(JSON.stringify(editableUser));
+            localStorage.setItem("user", JSON.stringify(user));
 
-            //eventlisteners for group panel
-            viewBtn.addEventListener("click", () => openViewPopup(g.id));
-            editBtn.addEventListener("click", () => openEditPopup(g.id));
-            inviteBtn.addEventListener("click", () => openInvitePopup(g.id));
+            //resets editableUser so it can be reused
+            editableUser = null;
 
-            item.appendChild(main); item.appendChild(actions);
-            return item;
+            renderTimeChipsFromArray(user.timeSlots);
+            if (studyPurposeMP) studyPurposeMP.value = user.studyPurpose ||
+                (studyPurposeMP.options[0] ? studyPurposeMP.options[0].text : "");
+            if (studyPurposeInput) studyPurposeInput.value = user.studyPurpose || "";
+            if (studyPurposeDisplay) studyPurposeDisplay.textContent = user.studyPurpose || "";
+
+            setEditing(false);
+            if (editBtn) editBtn.textContent = "Edit profile";
+            alert("Profile updated!");
+        });
+    }
+
+    //groups panel
+    const groupListEl = $("groupList");
+    const viewPopupEl = $("viewGroupPopup");
+    const viewTitleEl = $("viewGroupTitle");
+    const viewBodyEl = $("viewGroupBody");
+    const editPopupEl = $("editGroupPopup");
+    const editFormEl = $("editGroupForm");
+    const editMembersListEl = $("editMembersList");
+    const invitePopupEl = $("inviteGroupPopup");
+    const inviteTitleEl = $("inviteGroupTitle");
+    const inviteUserListEl = $("inviteUserList");
+    const inviteConfirmBtn = $("inviteConfirmBtn");
+
+    //helpers for persistent storage
+    const loadGroups = () =>
+    {
+        const rawG = localStorage.getItem("groups");
+        try
+        {
+            return rawG ? JSON.parse(rawG) : [];
         }
-
-        //function to render groups the user belongs to
-        function renderMyGroups() 
+        catch (e)
         {
-            if (!groupListEl) return;
-                
-            const groups = loadGroups();
-            const mine = groups.filter(g => Array.isArray(g.members) && user && g.members.some(m => (typeof m === "string" ? m === user.email : m.email === user.email)));
-            groupListEl.innerHTML = "";
-            if (mine.length === 0) 
-            {
-                groupListEl.innerHTML = `<div style="padding:12px;color:#666">You are not in any groups yet.</div>`;
-                return;
-            }
-            mine.forEach(g => groupListEl.appendChild(createGroupItemNode(g)));
+            console.error("groups parse", e); return [];
         }
-
-        //view button popup
-        function openViewPopup(groupId) 
+    };
+    const saveGroups = g => localStorage.setItem("groups", JSON.stringify(g));
+    const loadUsers = () =>
+    {
+        const rawU = localStorage.getItem("users");
+        try
         {
-            const g = loadGroups().find(x => x.id === groupId);
-            if (!g) return alert("Group not found");
-            viewTitleEl.textContent = g.name || "Group details";
-            viewBodyEl.innerHTML = `<div style="margin-bottom:8px">
+            return rawU ? JSON.parse(rawU) : [];
+        }
+        catch (e)
+        {
+            console.error("users parse", e); return [];
+        }
+    };
+
+    //small esc helper (looked this up when I was researching optimizations)
+    const esc = s => s == null ? "" : String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+    //popup show/hide
+    function showPopup(id) { const e = $(id); if (e) e.hidden = false; }
+    function hidePopup(id) { const e = $(id); if (e) e.hidden = true; }
+
+    //function for creating a group item and displaying some of its info
+    function createGroupItemNode(g)
+    {
+        const item = document.createElement("div");
+        item.className = "group-item";
+
+        const main = document.createElement("div");
+        main.className = "group-main";
+        const name = document.createElement("div"); name.className = "group-name"; name.textContent = g.name || "Untitled group";
+        const meta = document.createElement("div"); meta.className = "group-members";
+        const count = Array.isArray(g.members) ? g.members.length : 0;
+        meta.textContent = `${g.course || "No class set"} · ${g.time || "Time not set"} · ${count} member${count===1?'':'s'}`;
+        main.appendChild(name); main.appendChild(meta);
+
+        const actions = document.createElement("div"); actions.className = "group-actions";
+        const viewBtn = document.createElement("button"); viewBtn.type = "button"; viewBtn.className = "view-group-btn"; viewBtn.textContent = "View";
+        const editBtn = document.createElement("button"); editBtn.type = "button"; editBtn.className = "edit-group-btn"; editBtn.textContent = "Edit";
+        const inviteBtn = document.createElement("button"); inviteBtn.type = "button"; inviteBtn.className = "invite-group-btn"; inviteBtn.textContent = "Invite";
+        actions.appendChild(viewBtn); actions.appendChild(editBtn); actions.appendChild(inviteBtn);
+
+        //eventlisteners for group panel
+        viewBtn.addEventListener("click", () => openViewPopup(g.id));
+        editBtn.addEventListener("click", () => openEditPopup(g.id));
+        inviteBtn.addEventListener("click", () => openInvitePopup(g.id));
+
+        item.appendChild(main); item.appendChild(actions);
+        return item;
+    }
+
+    //function to render groups the user belongs to
+    function renderMyGroups()
+    {
+        if (!groupListEl) return;
+
+        const groups = loadGroups();
+        const mine = groups.filter(g => Array.isArray(g.members) && user && g.members.some(m => (typeof m === "string" ? m === user.email : m.email === user.email)));
+        groupListEl.innerHTML = "";
+        if (mine.length === 0)
+        {
+            groupListEl.innerHTML = `<div style="padding:12px;color:#666">You are not in any groups yet.</div>`;
+            return;
+        }
+        mine.forEach(g => groupListEl.appendChild(createGroupItemNode(g)));
+    }
+
+    //view button popup
+    function openViewPopup(groupId)
+    {
+        const g = loadGroups().find(x => x.id === groupId);
+        if (!g) return alert("Group not found");
+        viewTitleEl.textContent = g.name || "Group details";
+        viewBodyEl.innerHTML = `<div style="margin-bottom:8px">
                 <strong>Class:</strong> ${esc(g.course||"—")}<br/>
                 <strong>Time:</strong> ${esc(g.time||"—")}<br/>
                 <strong>Members:</strong> ${(Array.isArray(g.members)?g.members.length:0)}
             </div>`;
-            const ul = document.createElement("ul");
-            Object.assign(ul.style, {listStyle:"none", padding:0, margin:0, maxHeight:"30vh", overflowY:"auto", borderTop:"1px solid #eee", paddingTop:"8px"});
-            (Array.isArray(g.members)?g.members:[]).forEach(m => 
-            {
-                const li = document.createElement("li");
-                li.style.padding = "8px 6px";
-                li.textContent = (typeof m === "string") ? m : `${m.name} — ${m.email}`;
-                ul.appendChild(li);
-            });
-            viewBodyEl.appendChild(ul);
-            showPopup("viewGroupPopup");
-        }
-        function beginGroupClassEditing(editableGroup) {
-    const input = $("editClassSearch");
-    const list = $("editClassList");
-    const chips = $("editClassChips");
-
-    if (!input || !list || !chips) return;
-
-    function renderChips() {
-        chips.innerHTML = "";
-        if (!editableGroup.course) {
-            chips.innerHTML = `<p style="opacity:0.6;">No class selected</p>`;
-            return;
-        }
-        const chip = document.createElement("div");
-        chip.className = "chip1 selected";
-        chip.textContent = editableGroup.course;
-
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.textContent = "×";
-        btn.style.marginLeft = "6px";
-        btn.addEventListener("click", () => {
-            editableGroup.course = "";
-            renderChips();
-        });
-
-        chip.appendChild(btn);
-        chips.appendChild(chip);
-    }
-
-    renderChips();
-
-    input.addEventListener("input", () => {
-        const q = input.value.toLowerCase().trim();
-        list.innerHTML = "";
-        if (!q) { list.style.display = "none"; return; }
-
-        const filtered = SUBJECT_LIST.filter(c => c.toLowerCase().includes(q));
-        if (filtered.length === 0) {
-            const empty = document.createElement("div");
-            empty.className = "dropdown-item";
-            empty.textContent = "No matches found";
-            empty.style.opacity = "0.6";
-            list.appendChild(empty);
-            list.style.display = "block";
-            return;
-        }
-
-        filtered.forEach(c => {
-            const item = document.createElement("div");
-            item.className = "dropdown-item";
-            item.textContent = c;
-            item.tabIndex = 0;
-            item.addEventListener("click", () => {
-                editableGroup.course = c;
-                renderChips();
-                input.value = "";
-                list.innerHTML = "";
-                list.style.display = "none";
-            });
-            list.appendChild(item);
-        });
-        list.style.display = "block";
-    });
-
-    input.addEventListener("blur", () => setTimeout(() => list.style.display = "none", 150));
-}
-        //edit button popup
-        let editingGroupId = null;
-        let currentEditableGroup = null;
-        function openEditPopup(groupId) 
+        const ul = document.createElement("ul");
+        Object.assign(ul.style, {listStyle:"none", padding:0, margin:0, maxHeight:"30vh", overflowY:"auto", borderTop:"1px solid #eee", paddingTop:"8px"});
+        (Array.isArray(g.members)?g.members:[]).forEach(m =>
         {
-            const groups = loadGroups();
-            const g = groups.find(x => x.id === groupId);
-            if (!g) return alert("Group not found");
-            editingGroupId = g.id;
+            const li = document.createElement("li");
+            li.style.padding = "8px 6px";
+            li.textContent = (typeof m === "string") ? m : `${m.name} — ${m.email}`;
+            ul.appendChild(li);
+        });
+        viewBodyEl.appendChild(ul);
+        showPopup("viewGroupPopup");
+    }
+    function beginGroupClassEditing(editableGroup) {
+        const input = $("editClassSearch");
+        const list = $("editClassList");
+        const chips = $("editClassChips");
 
-            //populate form fields (name,course,time)
-            if (editFormEl) 
-            {
-                editFormEl.name.value = g.name || "";
-                editFormEl.course.value = g.course || "";
-                editFormEl.time.value = g.time || "";
+        if (!input || !list || !chips) return;
+
+        function renderChips() {
+            chips.innerHTML = "";
+            if (!editableGroup.course) {
+                chips.innerHTML = `<p style="opacity:0.6;">No class selected</p>`;
+                return;
             }
+            const chip = document.createElement("div");
+            chip.className = "chip1 selected";
+            chip.textContent = editableGroup.course;
 
-            currentEditableGroup = { ...g };
-            beginGroupClassEditing(currentEditableGroup);
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.textContent = "×";
+            btn.style.marginLeft = "6px";
+            btn.addEventListener("click", () => {
+                editableGroup.course = "";
+                renderChips();
+            });
 
-            myGroupsPanel.classList.add('editing');
-
-            //populate day/time selects from g.time if possible
-            const daySel = $("editDaySelect");
-            const timeSel = $("editTimeSelect");
-            if (daySel && timeSel) 
-            {
-                let day = "";
-                let time = "";
-                if (g.time && typeof g.time === "string") 
-                {
-                    const parts = g.time.split(/\s+/);
-                    if (parts.length >= 2) {
-                        day = parts[0];
-                        time = parts.slice(1).join(" ");
-                    } 
-                    else 
-                    {
-                        // fallback: try to parse "Mon 9-11" or "Mon 9-11"
-                        const m = g.time.match(/^([A-Za-z]+)\s+(.+)$/);
-                        if (m) { day = m[1]; time = m[2]; }
-                        else { time = g.time; }
-                    }
-                }
-                daySel.value = day || "";
-                timeSel.value = time || "";
-
-                if (editFormEl) editFormEl.time.value = (day && time) ? `${day} ${time}` : (g.time || "");
-            }
-
-            //populate group member list
-            if (editMembersListEl) 
-            {
-                editMembersListEl.innerHTML = "";
-                (Array.isArray(g.members) ? g.members : []).forEach(m => 
-                {
-                    const row = document.createElement("div");
-
-                    row.style.display = "flex"; row.style.justifyContent = "space-between"; row.style.alignItems = "center"; row.style.padding = "6px 0";
-                    const text = document.createElement("div");
-                    text.textContent = (typeof m === "string") ? m : `${m.name} — ${m.email}`;
-                    const rm = document.createElement("button");
-                    rm.type = "button";
-                    rm.textContent = "Remove";
-
-                    rm.addEventListener("click", () => 
-                    {
-                        const gs = loadGroups();
-                        const gi = gs.findIndex(x => x.id === g.id);
-                        if (gi === -1) return;
-                        gs[gi].members = gs[gi].members.filter(mm => (typeof mm === "string" ? mm !== m : mm.email !== (m.email || m)));
-                        saveGroups(gs);
-                        renderMyGroups();
-                        if (row.parentNode) row.parentNode.removeChild(row);
-                    });
-
-                    row.appendChild(text);
-                    row.appendChild(rm);
-                    editMembersListEl.appendChild(row);
-                });
-            }
-
-            showPopup("editGroupPopup");
-
-            const editSearch = $("editClassSearch");
-            if (editSearch) editSearch.focus && editSearch.focus();
+            chip.appendChild(btn);
+            chips.appendChild(chip);
         }
 
+        renderChips();
+
+        input.addEventListener("input", () => {
+            const q = input.value.toLowerCase().trim();
+            list.innerHTML = "";
+            if (!q) { list.style.display = "none"; return; }
+
+            const filtered = SUBJECT_LIST.filter(c => c.toLowerCase().includes(q));
+            if (filtered.length === 0) {
+                const empty = document.createElement("div");
+                empty.className = "dropdown-item";
+                empty.textContent = "No matches found";
+                empty.style.opacity = "0.6";
+                list.appendChild(empty);
+                list.style.display = "block";
+                return;
+            }
+
+            filtered.forEach(c => {
+                const item = document.createElement("div");
+                item.className = "dropdown-item";
+                item.textContent = c;
+                item.tabIndex = 0;
+                item.addEventListener("click", () => {
+                    editableGroup.course = c;
+                    renderChips();
+                    input.value = "";
+                    list.innerHTML = "";
+                    list.style.display = "none";
+                });
+                list.appendChild(item);
+            });
+            list.style.display = "block";
+        });
+
+        input.addEventListener("blur", () => setTimeout(() => list.style.display = "none", 150));
+    }
+    //edit button popup
+    let editingGroupId = null;
+    let currentEditableGroup = null;
+    function openEditPopup(groupId)
+    {
+        const groups = loadGroups();
+        const g = groups.find(x => x.id === groupId);
+        if (!g) return alert("Group not found");
+        editingGroupId = g.id;
+
+        //populate form fields (name,course,time)
         if (editFormEl)
-            {
-            editFormEl.addEventListener("submit", ev => 
-                {
-                ev.preventDefault();
-                if (!editingGroupId) return;
-                const gs = loadGroups();
-                const idx = gs.findIndex(x => x.id === editingGroupId);
-                if (idx === -1) return alert("Group not found");
-                gs[idx].name = editFormEl.name.value.trim();
-                gs[idx].course = currentEditableGroup ? currentEditableGroup.course : "";
-                gs[idx].time = editFormEl.time.value.trim();
-                saveGroups(gs);
-                renderMyGroups();
-                editingGroupId = null;
-                hidePopup("editGroupPopup");
-                currentEditableGroup = null;
+        {
+            editFormEl.name.value = g.name || "";
+            editFormEl.course.value = g.course || "";
+            editFormEl.time.value = g.time || "";
+        }
 
-                myGroupsPanel.classList.remove('editing');
-                });
+        currentEditableGroup = { ...g };
+        beginGroupClassEditing(currentEditableGroup);
+
+        myGroupsPanel.classList.add('editing');
+
+        //populate day/time selects from g.time if possible
+        const daySel = $("editDaySelect");
+        const timeSel = $("editTimeSelect");
+        if (daySel && timeSel)
+        {
+            let day = "";
+            let time = "";
+            if (g.time && typeof g.time === "string")
+            {
+                const parts = g.time.split(/\s+/);
+                if (parts.length >= 2) {
+                    day = parts[0];
+                    time = parts.slice(1).join(" ");
+                }
+                else
+                {
+                    // fallback: try to parse "Mon 9-11" or "Mon 9-11"
+                    const m = g.time.match(/^([A-Za-z]+)\s+(.+)$/);
+                    if (m) { day = m[1]; time = m[2]; }
+                    else { time = g.time; }
+                }
             }
+            daySel.value = day || "";
+            timeSel.value = time || "";
 
-            //invite popup
-            let invitingGroupId = null;
-            function openInvitePopup(groupId) 
-            {
-                invitingGroupId = groupId;
-                const g = loadGroups().find(x => x.id === groupId);
-                if (!g) return alert("Group not found");
-                inviteTitleEl.textContent = `Invite to ${g.name || "group"}`;
-                inviteUserListEl.innerHTML = "";
-                const users = loadUsers();
-                const existing = new Set((Array.isArray(g.members)?g.members:[]).map(m => (typeof m === "string" ? m : m.email)));
-                users.forEach(u => 
-                {
-                    const row = document.createElement("label");
-                    row.style.display = "flex"; row.style.alignItems = "center"; row.style.gap = "8px";
-                    const cb = document.createElement("input"); cb.type = "checkbox"; cb.value = u.email;
-                    const span = document.createElement("span"); span.textContent = `${u.name} (${u.email})`;
-                    if (existing.has(u.email) || (user && u.email === user.email)) { cb.disabled = true; span.style.opacity = "0.6"; }
-                    row.appendChild(cb); row.appendChild(span); inviteUserListEl.appendChild(row);
-                });
-                showPopup("inviteGroupPopup");
-            }
+            if (editFormEl) editFormEl.time.value = (day && time) ? `${day} ${time}` : (g.time || "");
+        }
 
-            if (inviteConfirmBtn) 
+        //populate group member list
+        if (editMembersListEl)
+        {
+            editMembersListEl.innerHTML = "";
+            (Array.isArray(g.members) ? g.members : []).forEach(m =>
             {
-                inviteConfirmBtn.addEventListener("click", () => 
+                const row = document.createElement("div");
+
+                row.style.display = "flex"; row.style.justifyContent = "space-between"; row.style.alignItems = "center"; row.style.padding = "6px 0";
+                const text = document.createElement("div");
+                text.textContent = (typeof m === "string") ? m : `${m.name} — ${m.email}`;
+                const rm = document.createElement("button");
+                rm.type = "button";
+                rm.textContent = "Remove";
+
+                rm.addEventListener("click", () =>
                 {
-                    if (!invitingGroupId) return;
-                    const checked = Array.from(inviteUserListEl.querySelectorAll("input[type=checkbox]:checked")).map(i => i.value);
-                    if (checked.length === 0) { alert("Select at least one person"); return; }
                     const gs = loadGroups();
-                    const idx = gs.findIndex(x => x.id === invitingGroupId);
-                    if (idx === -1) return alert("Group not found");
-                    if (!Array.isArray(gs[idx].members)) gs[idx].members = [];
-                    const usersMap = new Map(loadUsers().map(u => [u.email, u]));
-                    checked.forEach(email => 
-                    {
-                        const u = usersMap.get(email);
-                        if (!u) return;
-                        if (!gs[idx].members.some(mm => (typeof mm === "string" ? mm === email : mm.email === email))) 
-                        {
-                            gs[idx].members.push({ name: u.name, email: u.email });
-                        }
-                    });
+                    const gi = gs.findIndex(x => x.id === g.id);
+                    if (gi === -1) return;
+                    gs[gi].members = gs[gi].members.filter(mm => (typeof mm === "string" ? mm !== m : mm.email !== (m.email || m)));
                     saveGroups(gs);
                     renderMyGroups();
-                    hidePopup("inviteGroupPopup");
-                    invitingGroupId = null;
-                    alert("Invites added (simulated).");
+                    if (row.parentNode) row.parentNode.removeChild(row);
                 });
-            }
-        
 
-        const editDay = $("editDaySelect");
-        const editTime = $("editTimeSelect");
-        const hiddenTimeInput = $("editTimeInput");
-
-        
-        if (editDay && editTime) 
-        {
-            function syncHiddenTime() 
-            {
-                const d = editDay.value || "";
-                const t = editTime.value || "";
-                if (hiddenTimeInput) 
-                {
-                    hiddenTimeInput.value = (d && t) ? `${d} ${t}` : (d || t || "");
-                }
-            }
-            editDay.addEventListener("change", syncHiddenTime);
-            editTime.addEventListener("change", syncHiddenTime);
-
-            syncHiddenTime();
+                row.appendChild(text);
+                row.appendChild(rm);
+                editMembersListEl.appendChild(row);
+            });
         }
 
-        document.querySelectorAll(".close-popup").forEach(b => b.addEventListener("click", e => 
+        showPopup("editGroupPopup");
+
+        const editSearch = $("editClassSearch");
+        if (editSearch) editSearch.focus && editSearch.focus();
+    }
+
+    if (editFormEl)
+    {
+        editFormEl.addEventListener("submit", ev =>
         {
-            const id = e.currentTarget.dataset.popup; 
-            if (id) hidePopup(id);
+            ev.preventDefault();
+            if (!editingGroupId) return;
+            const gs = loadGroups();
+            const idx = gs.findIndex(x => x.id === editingGroupId);
+            if (idx === -1) return alert("Group not found");
+            gs[idx].name = editFormEl.name.value.trim();
+            gs[idx].course = currentEditableGroup ? currentEditableGroup.course : "";
+            gs[idx].time = editFormEl.time.value.trim();
+            saveGroups(gs);
+            renderMyGroups();
+            editingGroupId = null;
+            hidePopup("editGroupPopup");
+            currentEditableGroup = null;
 
-            myGroupsPanel.classList.remove('editing')
-        }));
+            myGroupsPanel.classList.remove('editing');
+        });
+    }
 
-        //initial render
-        renderMyGroups();
-        //reverting changes on cancel
-        setEditing(false);
-    });
+    //invite popup
+    let invitingGroupId = null;
+    function openInvitePopup(groupId)
+    {
+        invitingGroupId = groupId;
+        const g = loadGroups().find(x => x.id === groupId);
+        if (!g) return alert("Group not found");
+        inviteTitleEl.textContent = `Invite to ${g.name || "group"}`;
+        inviteUserListEl.innerHTML = "";
+        const users = loadUsers();
+        const existing = new Set((Array.isArray(g.members)?g.members:[]).map(m => (typeof m === "string" ? m : m.email)));
+        users.forEach(u =>
+        {
+            const row = document.createElement("label");
+            row.style.display = "flex"; row.style.alignItems = "center"; row.style.gap = "8px";
+            const cb = document.createElement("input"); cb.type = "checkbox"; cb.value = u.email;
+            const span = document.createElement("span"); span.textContent = `${u.name} (${u.email})`;
+            if (existing.has(u.email) || (user && u.email === user.email)) { cb.disabled = true; span.style.opacity = "0.6"; }
+            row.appendChild(cb); row.appendChild(span); inviteUserListEl.appendChild(row);
+        });
+        showPopup("inviteGroupPopup");
+    }
+
+    if (inviteConfirmBtn)
+    {
+        inviteConfirmBtn.addEventListener("click", () =>
+        {
+            if (!invitingGroupId) return;
+            const checked = Array.from(inviteUserListEl.querySelectorAll("input[type=checkbox]:checked")).map(i => i.value);
+            if (checked.length === 0) { alert("Select at least one person"); return; }
+            const gs = loadGroups();
+            const idx = gs.findIndex(x => x.id === invitingGroupId);
+            if (idx === -1) return alert("Group not found");
+            if (!Array.isArray(gs[idx].members)) gs[idx].members = [];
+            const usersMap = new Map(loadUsers().map(u => [u.email, u]));
+            checked.forEach(email =>
+            {
+                const u = usersMap.get(email);
+                if (!u) return;
+                if (!gs[idx].members.some(mm => (typeof mm === "string" ? mm === email : mm.email === email)))
+                {
+                    gs[idx].members.push({ name: u.name, email: u.email });
+                }
+            });
+            saveGroups(gs);
+            renderMyGroups();
+            hidePopup("inviteGroupPopup");
+            invitingGroupId = null;
+            alert("Invites added (simulated).");
+        });
+    }
+
+
+    const editDay = $("editDaySelect");
+    const editTime = $("editTimeSelect");
+    const hiddenTimeInput = $("editTimeInput");
+
+
+    if (editDay && editTime)
+    {
+        function syncHiddenTime()
+        {
+            const d = editDay.value || "";
+            const t = editTime.value || "";
+            if (hiddenTimeInput)
+            {
+                hiddenTimeInput.value = (d && t) ? `${d} ${t}` : (d || t || "");
+            }
+        }
+        editDay.addEventListener("change", syncHiddenTime);
+        editTime.addEventListener("change", syncHiddenTime);
+
+        syncHiddenTime();
+    }
+
+    document.querySelectorAll(".close-popup").forEach(b => b.addEventListener("click", e =>
+    {
+        const id = e.currentTarget.dataset.popup;
+        if (id) hidePopup(id);
+
+        myGroupsPanel.classList.remove('editing')
+    }));
+
+    //initial render
+    renderMyGroups();
+    //reverting changes on cancel
+    setEditing(false);
+});
